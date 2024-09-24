@@ -132,12 +132,15 @@
     gap: 4rem;
     margin-bottom: 1rem;
   }
-  .quiz-box .question-text, .quiz-box {
+  .quiz-box{
+    margin: 1rem auto;
+  }
+
+  .question-text{
     font-size: 2rem;
-    
     color: #000;
     line-height: var(--line-height);
-    margin: 1rem auto;
+    margin: 1rem 0;
     font-weight: 700;
   }
 

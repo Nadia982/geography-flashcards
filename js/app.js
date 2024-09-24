@@ -1,7 +1,6 @@
 const questionNumber = document.querySelector(".question-number");
 const questionText = document.querySelector(".question-text");
 const answerText = document.querySelector(".answer-text");
-
 const optionContainer = document.querySelector(".option-container");
 const answersIndicatorContainer = document.querySelector(".answers-indicator");
 const homeBox = document.querySelector(".home-box");
@@ -10,7 +9,7 @@ const resultBox = document.querySelector(".result-box");
 const nextButton = document.querySelector(".next-btn");
 const button = document.querySelector(".btn");
 const showDefinitionButton = document.getElementById("show-definition")
-questionLimit = 20;
+questionLimit = 5;
 // const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(".questions-asked-container");
 
@@ -32,7 +31,7 @@ function setAvailableQuestions() {
   }
 }
 
-//set question number, question text and answer options
+//set question number, question text and answer options - line 35 to 110
 function getNewQuestion() {
   answerText.classList.add("hide");  
   nextButton.classList.add("hide");
@@ -72,40 +71,10 @@ function getNewQuestion() {
   // get the length of the list of options
   const optionsLength = currentQuestion.options.length;
 
-  optionContainer.innerHTML = "";
-
-  // push options into availableOptions array
-
-  for (let i = 0; i < optionsLength; i++) {
-    availableOptions.push(i);
-  }
+  // optionContainer.innerHTML = "";
 
   let animationDelay = 0.1;
 
-  //create options in html
-  for (let i = 0; i < optionsLength; i++) {
-    const optionIndex =
-    availableOptions[0];
-    //   availableOptions[Math.floor(Math.random() * availableOptions.length)];
-
-    //get the position of optionIndex from availableOptions
-    const index2 = availableOptions.indexOf(optionIndex);
-
-    //remove the “optionIndex” from the availableOptions so that the option does not repeat
-    availableOptions.splice(index2, 1);
-
-    const option = document.createElement("button");
-    option.innerHTML = currentQuestion.options[optionIndex];
-    option.id = optionIndex;
-    option.style.animationDelay = animationDelay + "s";
-  
-    animationDelay = animationDelay + 0.1;
-
-    option.className = "option";
-    optionContainer.appendChild(option);
-    showDefinitionButton.addEventListener("onclick", "showDefinition()");
-
-  }
   readBtn.focus();
 questionCounter++;
 }
@@ -117,8 +86,6 @@ function showDefinition() {
 }
 
 function getResult(element) {
-  // unclickableOptions();
-  // const id = parseInt(element.id);
 
   const answerText = element.innerHTML;
   yourAnswersList.push(answerText);
