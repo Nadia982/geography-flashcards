@@ -111,7 +111,8 @@ questionCounter++;
 }
 
 function showDefinition() {
-  answerText.classList.remove("hide");  
+  answerText.classList.remove("hide"); 
+  speakDefinition(); 
   nextButton.classList.remove("hide");
 }
 
@@ -387,6 +388,40 @@ const speak = () => {
     //Determining which voice to use to speak
     const selectedVoice = "Google UK English Male";
     console.log(questionText.textContent);
+
+    //loop through the voices and if the current iteration matches what we selected then use that voice
+    voices.forEach((voice) => {
+      if (voice.name === selectedVoice) {
+        speakText.voice = voice;
+        console.log(voice);
+      }
+    });
+
+    //Speak
+    synth.speak(speakText);
+  }
+};
+
+const speakDefinition = () => {
+  //Check if already speaking
+  if (synth.speaking) {
+    console.error("Already speaking...");
+    return;
+  }
+  if (questionText.textContent !== "") {
+    //Get text to speak
+    const speakText = new SpeechSynthesisUtterance(answerText.textContent);
+
+    //Speak end
+    speakText.onend = (e) => {
+      console.log("Finished speaking");
+    };
+    //Speak error
+    speakText.onerror = (e) => {
+      console.error("Something went wrong");
+    };
+    //Determining which voice to use to speak
+    const selectedVoice = "Google UK English Male";
 
     //loop through the voices and if the current iteration matches what we selected then use that voice
     voices.forEach((voice) => {
