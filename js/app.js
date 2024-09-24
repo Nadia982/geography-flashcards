@@ -79,11 +79,28 @@ function getNewQuestion() {
 questionCounter++;
 }
 
-function showDefinition() {
-  answerText.classList.remove("hide"); 
-  speakDefinition(); 
-  nextButton.classList.remove("hide");
+function changeShowHideText(){
+if (!nextButton.classList.contains(!"hide")){
+  console.log("next button does not contain class 'hide'")
+  showDefinitionButton.innerText === "Show definition"
+} else if (nextButton.classList.contains("hide")){
+  console.log("next button does contains class 'hide'")
+  showDefinitionButton.innerText === "Hide definition"
 }
+}
+function showDefinition() {
+  answerText.classList.toggle("hide"); 
+  speakDefinition(); 
+  nextButton.classList.toggle("hide");
+  showDefinitionButton.classList.toggle("active");
+  if (!showDefinitionButton.classList.contains("active")){
+    showDefinitionButton.innerText = "Show definition"
+  } else if (showDefinitionButton.classList.contains("active")){
+    showDefinitionButton.innerText = "Hide definition"
+  }
+}
+
+
 
 function getResult(element) {
 
