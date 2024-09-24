@@ -9,7 +9,8 @@ const resultBox = document.querySelector(".result-box");
 const nextButton = document.querySelector(".next-btn");
 const button = document.querySelector(".btn");
 const showDefinitionButton = document.getElementById("show-definition")
-questionLimit = 5;
+const totalAvailableQuestions= document.querySelector(".total-available-questions");
+const questionLimit = 5;
 // const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(".questions-asked-container");
 
@@ -31,10 +32,16 @@ function setAvailableQuestions() {
   }
 }
 
-//set question number, question text and answer options - line 35 to 110
+function resetDefinitionButton(){
+  showDefinitionButton.classList.remove("active");
+  showDefinitionButton.innerText = "Show definition";
+}
+
+//set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
   answerText.classList.add("hide");  
   nextButton.classList.add("hide");
+resetDefinitionButton();
   //set question number
   questionNumber.innerHTML = `Question ${
     questionCounter + 1
@@ -66,38 +73,28 @@ function getNewQuestion() {
   //   img.src = currentQuestion.img;
   //   questionText.appendChild(img);
   // }
-
-  // set options
-  // get the length of the list of options
-  const optionsLength = currentQuestion.options.length;
-
-  // optionContainer.innerHTML = "";
-
   let animationDelay = 0.1;
 
   readBtn.focus();
 questionCounter++;
+
 }
 
-function changeShowHideText(){
-if (!nextButton.classList.contains(!"hide")){
-  console.log("next button does not contain class 'hide'")
-  showDefinitionButton.innerText === "Show definition"
-} else if (nextButton.classList.contains("hide")){
-  console.log("next button does contains class 'hide'")
-  showDefinitionButton.innerText === "Hide definition"
+
+function toggleDefinitionButton(){  
+  showDefinitionButton.classList.toggle("active");
+if (!showDefinitionButton.classList.contains("active")){
+  showDefinitionButton.innerText = "Show definition"
+} else if (showDefinitionButton.classList.contains("active")){
+  showDefinitionButton.innerText = "Hide definition"
 }
 }
-function showDefinition() {
+
+function showHideDefinition() {
   answerText.classList.toggle("hide"); 
   speakDefinition(); 
   nextButton.classList.toggle("hide");
-  showDefinitionButton.classList.toggle("active");
-  if (!showDefinitionButton.classList.contains("active")){
-    showDefinitionButton.innerText = "Show definition"
-  } else if (showDefinitionButton.classList.contains("active")){
-    showDefinitionButton.innerText = "Hide definition"
-  }
+  toggleDefinitionButton();
 }
 
 
@@ -120,22 +117,11 @@ function getResult(element) {
     element.classList.add("incorrect");
     //add a cross mark to the answer indicator
     updateAnswerIndicator("incorrect");
-
-    //if answer is incorrect then show the correct answer
-    // const optionsLength = optionContainer.children.length;
-    // for (let i = 0; i < optionsLength; i++) {
-    //   setTimeout(() => {
-    //     if (
-    //       parseInt(optionContainer.children[i].id) === currentQuestion.answer
-    //     ) {
-    //       optionContainer.children[i].classList.add("correct");
-    //     }
-    //   }, 400);
-    // }
   }
   attempt++;
   nextButton.classList.remove("hide");
   answerText.classList.remove("hide");
+  
 }
 
 //add shortcut key for the return key to go to the next question
@@ -176,6 +162,7 @@ function next() {
     quizOver();
   } else {
     getNewQuestion();
+    resetDefinitionButton();
   }
 }
 
@@ -306,9 +293,9 @@ function startQuiz() {
   answersIndicator();
 }
 
-window.onload = function () {
-  homeBox.querySelector(".total-questions").innerHTML = questionLimit;
-};
+// window.onload = function () {
+//   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
+// };
 
 // Text to speech
 
@@ -338,9 +325,6 @@ const getVoices = () => {
     option.setAttribute("data-name", voice.name);
     voiceSelect.appendChild(option);
     option.style.fontSize = "0.9rem";
-    // if(option.data-lang === fr-FR ){
-    //   option.setAttribute("selected");
-    // }
   });
 };
 
@@ -354,7 +338,7 @@ if (synth.onvoiceschanged !== undefined) {
 const speak = () => {
   //Check if already speaking
   if (synth.speaking) {
-    console.error("Already speaking...");
+    // console.error("Already speaking...");
     return;
   }
   if (questionText.textContent !== "") {
