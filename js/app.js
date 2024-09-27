@@ -1,6 +1,18 @@
+console.clear();
+let voices = [];
+//Initialise SppechSythesis API
+let synth = window.speechSynthesis;
+
+window.speechSynthesis.addEventListener("voiceschanged", function () {
+  voices = window.speechSynthesis.getVoices();
+});
+
+const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
+
 const questionNumber = document.querySelector(".question-number");
 const questionText = document.querySelector(".question-text");
 const answerText = document.querySelector(".answer-text");
+// const questionsFinishedMessage = document.querySelector(".questions-finished-message");
 const optionContainer = document.querySelector(".option-container");
 const answersIndicatorContainer = document.querySelector(".answers-indicator");
 const homeBox = document.querySelector(".home-box");
@@ -10,8 +22,8 @@ const nextButton = document.querySelector(".next-btn");
 const button = document.querySelector(".btn");
 const showDefinitionButton = document.getElementById("show-definition")
 const totalAvailableQuestions= document.querySelector(".total-available-questions");
-const questionLimit = 5;
-// const questionLimit = questions.length;
+// const questionLimit = 5;
+const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(".questions-asked-container");
 
 let questionCounter = 0;
@@ -131,7 +143,7 @@ function pressEnterForNextQu(e) {
   }
 }
 
-//make other options unclickable once user has selected an option
+// make other options unclickable once user has selected an option
 function unclickableOptions() {
   const optionsLength = optionContainer.children.length;
   for (let i = 0; i < optionsLength; i++) {
@@ -293,23 +305,21 @@ function startQuiz() {
   answersIndicator();
 }
 
-// window.onload = function () {
-//   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
-// };
+window.onload = function () {
+  homeBox.querySelector(".total-questions").innerHTML = questionLimit;
+};
 
 // Text to speech
 
-//Initialise SppechSythesis API
-const synth = window.speechSynthesis;
+
 
 //Fetching DOM elements
 const readBtn = document.querySelector("#read-btn");
 
-const voiceSelect = document.querySelector("#voice-select");
 const body = document.querySelector("body");
 
 //Initialise the voices array
-let voices = [];
+
 
 const getVoices = () => {
   voices = synth.getVoices();
