@@ -9,10 +9,9 @@ window.speechSynthesis.addEventListener("voiceschanged", function () {
 
 const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
 
-const questionNumber = document.querySelector(".question-number");
+const questionNumber = document.querySelector(".question-number"); //question number appears here
 const questionText = document.querySelector(".question-text");
 const answerText = document.querySelector(".answer-text");
-// const questionsFinishedMessage = document.querySelector(".questions-finished-message");
 const optionContainer = document.querySelector(".option-container");
 const answersIndicatorContainer = document.querySelector(".answers-indicator");
 const homeBox = document.querySelector(".home-box");
@@ -67,7 +66,7 @@ resetDefinitionButton();
   questionText.innerHTML = currentQuestion.q;
   answerText.innerHTML = currentQuestion.a;
   questionsAskedList.push(currentQuestion);
-  setTimeout(speak, 500);
+  setTimeout(speak, 400);
 
   // get the position of "QuestionIndex" from the "AvailableQuestions" array
 
