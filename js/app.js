@@ -1,7 +1,6 @@
 console.clear();
 let voices = [];
-//Initialise SppechSythesis API
-let synth = window.speechSynthesis;
+let synth = window.speechSynthesis; //Initialise SpeechSythesis API
 
 window.speechSynthesis.addEventListener("voiceschanged", function () {
   voices = window.speechSynthesis.getVoices();
@@ -10,20 +9,22 @@ window.speechSynthesis.addEventListener("voiceschanged", function () {
 const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
 
 const questionNumber = document.querySelector(".question-number"); //question number appears here
-const questionText = document.querySelector(".question-text");
-const answerText = document.querySelector(".answer-text");
-const optionContainer = document.querySelector(".option-container");
-const answersIndicatorContainer = document.querySelector(".answers-indicator");
-const homeBox = document.querySelector(".home-box");
-const quizBox = document.querySelector(".quiz-box");
-const resultBox = document.querySelector(".result-box");
-const nextButton = document.querySelector(".next-btn");
-const button = document.querySelector(".btn");
-const showDefinitionButton = document.getElementById("show-definition")
-const totalAvailableQuestions= document.querySelector(".total-available-questions");
+const questionText = document.querySelector(".question-text"); //question text appears here
+const answerText = document.querySelector(".answer-text"); //answer text appears here
+const optionContainer = document.querySelector(".option-container"); //option container
+const answersIndicatorContainer = document.querySelector(".answers-indicator"); //answer indicator container
+const homeBox = document.querySelector(".home-box"); //home box (initial screen)
+const quizBox = document.querySelector(".quiz-box"); // quiz box
+const resultBox = document.querySelector(".result-box"); // result box
+const nextButton = document.querySelector(".next-btn"); // next button
+// const button = document.querySelector(".btn"); //button
+const showDefinitionButton = document.getElementById("show-definition"); // show definition button
+// const totalAvailableQuestions= document.querySelector(".total-available-questions"); // total available questions
 // const questionLimit = 5;
 const questionLimit = questions.length;
-const questionsAskedContainer = document.querySelector(".questions-asked-container");
+const questionsAskedContainer = document.querySelector(
+  ".questions-asked-container"
+); // questions asked container (results screen)
 
 let questionCounter = 0;
 let currentQuestion;
@@ -34,47 +35,57 @@ let attempt = 0;
 let questionsAskedList = [];
 let yourAnswersList = [];
 
-
-// add the questions to the availableQuestions array
+// add the questions to the availQuestions array
 function setAvailableQuestions() {
-  const totalQuestions = questions.length;
-  for (let i = 0; i < totalQuestions; i++) {
-    availableQuestions.push(questions[i]);
+  let questionIndices = [...Array(questions.length).keys()];
+  questionIndices = questionIndices.sort((a, b) => 0.5 - Math.random());
+
+  for (let item of questionIndices) {
+    availableQuestions.push(questions[item]);
   }
+
 }
 
-function resetDefinitionButton(){
+function resetDefinitionButton() {
   showDefinitionButton.classList.remove("active");
   showDefinitionButton.innerText = "Show definition";
 }
-
+let read; 
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
-  answerText.classList.add("hide");  
+
+  answerText.classList.add("hide");
   nextButton.classList.add("hide");
-resetDefinitionButton();
+  resetDefinitionButton();
   //set question number
   questionNumber.innerHTML = `Question ${
     questionCounter + 1
   } of ${questionLimit}`;
 
-  //get random question
-  const questionIndex =
-    availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+  //get question
+  read = (text) => {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.voice = englishMaleVoice;
+    speech.pitch = 0.7;
+    speech.volume = 0.9;
+    speech.rate = 0.9;
+    window.speechSynthesis.speak(speech);
+  };
+  
+  const questionIndex = availableQuestions[questionCounter];
   currentQuestion = questionIndex;
+  console.log(currentQuestion.q);
+  setTimeout(read(currentQuestion.q), 400);
   //set question text
   questionText.innerHTML = currentQuestion.q;
   answerText.innerHTML = currentQuestion.a;
   questionsAskedList.push(currentQuestion);
-  setTimeout(speak, 400);
+  
 
-  // get the position of "QuestionIndex" from the "AvailableQuestions" array
+  readBtn.addEventListener("click", () => {
+    read(currentQuestion.q);
+  });
 
-  const index1 = availableQuestions.indexOf(questionIndex);
-
-  //remove questionIndex from the ‘AvailableQuestions’ array
-
-  availableQuestions.splice(index1, 1);
 
   // show question image if "img" property exists
 
@@ -86,40 +97,53 @@ resetDefinitionButton();
   // }
   let animationDelay = 0.1;
 
+  optionContainer.innerHTML = "";
+  // const optionsLength = currentQuestion.options.length;
+  // console.log(optionsLength)
+  const yes = document.createElement("button");
+yes.innerText = "yes";
+yes.classList.add("btn");
+yes.style.backgroundColor = "green";
+const no = document.createElement("button");
+no.innerText = "no";
+no.style.backgroundColor = "red" ;
+no.classList.add("btn");
+optionContainer.appendChild(yes);
+optionContainer.appendChild(no);
+
+
   readBtn.focus();
-questionCounter++;
-
+  questionCounter++;
 }
 
-
-function toggleDefinitionButton(){  
+function toggleDefinitionButton() {
   showDefinitionButton.classList.toggle("active");
-if (!showDefinitionButton.classList.contains("active")){
-  showDefinitionButton.innerText = "Show definition"
-} else if (showDefinitionButton.classList.contains("active")){
-  showDefinitionButton.innerText = "Hide definition"
-}
+  if (!showDefinitionButton.classList.contains("active")) {
+    showDefinitionButton.innerText = "Show definition";
+  } else if (showDefinitionButton.classList.contains("active")) {
+    read(currentQuestion.a);
+    showDefinitionButton.innerText = "Hide definition";
+  }
 }
 
 function showHideDefinition() {
-  answerText.classList.toggle("hide"); 
-  speakDefinition(); 
+  answerText.classList.toggle("hide");
   nextButton.classList.toggle("hide");
   toggleDefinitionButton();
 }
 
-
-
 function getResult(element) {
-
   const answerText = element.innerHTML;
   yourAnswersList.push(answerText);
   console.log(yourAnswersList);
 
+// yes.addEventListener("click", ()=>{ element.classList.add("correct")});
+// yes.addEventListener("click", ()=>{ console.log("yes")});
+
   //get the answer by comparing the id of the clicked option
-  if (id === currentQuestion.answer) {
+  if (id === currentQuestion.a) {
     // add green colour if user selects correct option
-    element.classList.add("correct");
+    
     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
@@ -132,7 +156,6 @@ function getResult(element) {
   attempt++;
   nextButton.classList.remove("hide");
   answerText.classList.remove("hide");
-  
 }
 
 //add shortcut key for the return key to go to the next question
@@ -189,21 +212,21 @@ function quizOver() {
 function quizResult() {
   resultBox.querySelector(".total-score").innerHTML =
     correctAnswers + "/" + questionLimit;
-    displayQuestions();
+  displayQuestions();
 }
 
 function displayQuestions() {
-    for (let i = 0; i < questionsAskedList.length; i++) {
-      //create table row for each question
-      const questionRow = document.createElement("tr");
-  
-      //create a cell to show the question number
-      const questionNoCell = document.createElement("td")
-      questionNoCell.textContent = i+1;
-      questionNoCell.setAttribute("data-cell", "Question no: ");
-  
-      //create a cell to show the question text
-      const questionAskedCell = document.createElement("td");
+  for (let i = 0; i < questionsAskedList.length; i++) {
+    //create table row for each question
+    const questionRow = document.createElement("tr");
+
+    //create a cell to show the question number
+    const questionNoCell = document.createElement("td");
+    questionNoCell.textContent = i + 1;
+    questionNoCell.setAttribute("data-cell", "Question no: ");
+
+    //create a cell to show the question text
+    const questionAskedCell = document.createElement("td");
     //   if (questionsAskedList[i].hasOwnProperty("q3")) {
     //     questionAskedCell.innerHTML =
     //       questionsAskedList[i].q +
@@ -214,52 +237,55 @@ function displayQuestions() {
     //   } else if (questionsAskedList[i].hasOwnProperty("q2")) {
     //     let q2QuestionContents = questionsAskedList[i].q + " " + questionsAskedList[i].q2;
     //     console.log(q2QuestionContents);
-    //     questionAskedCell.innerHTML = q2QuestionContents; 
+    //     questionAskedCell.innerHTML = q2QuestionContents;
     //   } else {
-        questionAskedCell.innerHTML = questionsAskedList[i].q;
+    questionAskedCell.innerHTML = questionsAskedList[i].q;
     //   }
-      questionAskedCell.setAttribute("data-cell", "Question: ");
+    questionAskedCell.setAttribute("data-cell", "Question: ");
 
-      //create a table cell to show the English translation
-      const translationCell = document.createElement("td");
-      translationCell.innerHTML = questionsAskedList[i].a;
-      translationCell.setAttribute("data-cell", "Translation: ");
+    //create a table cell to show the English translation
+    const translationCell = document.createElement("td");
+    translationCell.innerHTML = questionsAskedList[i].a;
+    translationCell.setAttribute("data-cell", "Translation: ");
 
-      // create a table cell to show the given answer
-      const yourAnswerCell = document.createElement("td");
-      yourAnswerCell.innerHTML = yourAnswersList[i];
-      yourAnswerCell.setAttribute("data-cell", "You answered: ");
-      
-      //create a table cell to show the correct answer
-      const correctAnswerCell = document.createElement("td");
-      correctAnswerCell.innerHTML = questionsAskedList[i].options[questionsAskedList[i].answer];
-      correctAnswerCell.setAttribute("data-cell", "Correct answer: ");
-  
-      //create a table cell to show if the given answer was right or wrong
-      const resultCell = document.createElement("td");
-      if(yourAnswerCell.innerHTML === correctAnswerCell.innerHTML) {
-        resultCell.innerHTML = "<img src='./images/correct.png' alt = 'correct' width='30'/>";
-        resultCell.classList.add("correct");
-      } else {
-        resultCell.innerHTML = "<img src='./images/incorrect.png' alt = 'incorrect' width='20'/>";
-        resultCell.classList.add("incorrect");
-      }
-      //append the created cells to the question row
-      questionRow.appendChild(questionNoCell);    
-      questionRow.appendChild(questionAskedCell);
-      questionRow.appendChild(translationCell);
+    // create a table cell to show the given answer
+    const yourAnswerCell = document.createElement("td");
+    yourAnswerCell.innerHTML = yourAnswersList[i];
+    yourAnswerCell.setAttribute("data-cell", "You answered: ");
+
+    //create a table cell to show the correct answer
+    const correctAnswerCell = document.createElement("td");
+    correctAnswerCell.innerHTML =
+      questionsAskedList[i].options[questionsAskedList[i].answer];
+    correctAnswerCell.setAttribute("data-cell", "Correct answer: ");
+
+    //create a table cell to show if the given answer was right or wrong
+    const resultCell = document.createElement("td");
+    if (yourAnswerCell.innerHTML === correctAnswerCell.innerHTML) {
+      resultCell.innerHTML =
+        "<img src='./images/correct.png' alt = 'correct' width='30'/>";
+      resultCell.classList.add("correct");
+    } else {
+      resultCell.innerHTML =
+        "<img src='./images/incorrect.png' alt = 'incorrect' width='20'/>";
+      resultCell.classList.add("incorrect");
+    }
+    //append the created cells to the question row
+    questionRow.appendChild(questionNoCell);
+    questionRow.appendChild(questionAskedCell);
+    questionRow.appendChild(translationCell);
     //   questionRow.appendChild(yourAnswerCell);
     //   questionRow.appendChild(correctAnswerCell);
-      questionRow.appendChild(resultCell);
-      //Add the new row to questionsAskedContainer
-      questionsAskedContainer.appendChild(questionRow);
-    }
+    questionRow.appendChild(resultCell);
+    //Add the new row to questionsAskedContainer
+    questionsAskedContainer.appendChild(questionRow);
   }
-  
-  function removeQuestions() {
-    questionsAskedContainer.textContent = "";
-  }
-  
+}
+
+function removeQuestions() {
+  questionsAskedContainer.textContent = "";
+}
+
 function resetQuiz() {
   questionCounter = 0;
   correctAnswers = 0;
@@ -279,7 +305,6 @@ function tryAgainQuiz() {
 
   resetQuiz();
   startQuiz();
-    
 }
 
 function goToHome() {
@@ -308,113 +333,6 @@ window.onload = function () {
   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
 };
 
-// Text to speech
-
-
-
 //Fetching DOM elements
 const readBtn = document.querySelector("#read-btn");
-
 const body = document.querySelector("body");
-
-//Initialise the voices array
-
-
-const getVoices = () => {
-  voices = synth.getVoices();
-
-  //Loop through voices and create an option for each one
-  voices.forEach((voice) => {
-    //Create option element for each voice
-    const option = document.createElement("option");
-    //Fill option with voice and language
-    option.textContent = voice.lang + " (" + voice.name + ")";
-    //Set required option attributes
-    option.setAttribute("data-lang", voice.lang);
-    option.setAttribute("data-name", voice.name);
-    voiceSelect.appendChild(option);
-    option.style.fontSize = "0.9rem";
-  });
-};
-
-getVoices();
-
-//the following code is required in order to get the voices.
-if (synth.onvoiceschanged !== undefined) {
-  synth.onvoiceschanged = getVoices;
-}
-//Speak
-const speak = () => {
-  //Check if already speaking
-  if (synth.speaking) {
-    // console.error("Already speaking...");
-    return;
-  }
-  if (questionText.textContent !== "") {
-    //Get text to speak
-    const speakText = new SpeechSynthesisUtterance(questionText.textContent);
-
-    //Speak end
-    speakText.onend = (e) => {
-      console.log("Finished speaking");
-    };
-    //Speak error
-    speakText.onerror = (e) => {
-      console.error("Something went wrong");
-    };
-    //Determining which voice to use to speak
-    const selectedVoice = "Google UK English Male";
-    console.log(questionText.textContent);
-
-    //loop through the voices and if the current iteration matches what we selected then use that voice
-    voices.forEach((voice) => {
-      if (voice.name === selectedVoice) {
-        speakText.voice = voice;
-        console.log(voice);
-      }
-    });
-
-    //Speak
-    synth.speak(speakText);
-  }
-};
-
-const speakDefinition = () => {
-  //Check if already speaking
-  if (synth.speaking) {
-    console.error("Already speaking...");
-    return;
-  }
-  if (questionText.textContent !== "") {
-    //Get text to speak
-    const speakText = new SpeechSynthesisUtterance(answerText.textContent);
-
-    //Speak end
-    speakText.onend = (e) => {
-      console.log("Finished speaking");
-    };
-    //Speak error
-    speakText.onerror = (e) => {
-      console.error("Something went wrong");
-    };
-    //Determining which voice to use to speak
-    const selectedVoice = "Google UK English Male";
-
-    //loop through the voices and if the current iteration matches what we selected then use that voice
-    voices.forEach((voice) => {
-      if (voice.name === selectedVoice) {
-        speakText.voice = voice;
-        console.log(voice);
-      }
-    });
-
-    //Speak
-    synth.speak(speakText);
-  }
-};
-
-//Event listeners
-// Text form submission
-readBtn.addEventListener("click", (e) => {
-  speak();
-});
