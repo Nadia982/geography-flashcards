@@ -350,6 +350,10 @@
     visibility: hidden;
   }
 
+  .answer-known-container.hide{
+    visibility: hidden;
+  }
+
   @media (max-width: 480px) {
     th {
       display: none;

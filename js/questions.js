@@ -9,7 +9,8 @@ const questions = [
     id: 2,
     q: "mineral",
     a: "A solid, naturally occurring inorganic (non-living) substance",
-    options: ["yes", "no"]
+    options: ["yes", "no"],
+    
   },
   {
     id: 3,

@@ -21,6 +21,7 @@ const nextButton = document.querySelector(".next-btn"); // next button
 const showDefinitionButton = document.getElementById("show-definition"); // show definition button
 // const totalAvailableQuestions= document.querySelector(".total-available-questions"); // total available questions
 // const questionLimit = 5;
+const answerKnownContainer = document.querySelector(".answer-known-container");
 const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(
   ".questions-asked-container"
@@ -128,7 +129,8 @@ function toggleDefinitionButton() {
 
 function showHideDefinition() {
   answerText.classList.toggle("hide");
-  nextButton.classList.toggle("hide");
+  answerKnownContainer.classList.remove("hide");
+  nextButton.classList.remove("hide");
   toggleDefinitionButton();
 }
 
@@ -137,7 +139,7 @@ function getResult(element) {
   yourAnswersList.push(answerText);
   console.log(yourAnswersList);
 
-// yes.addEventListener("click", ()=>{ element.classList.add("correct")});
+yes.addEventListener("click", ()=>{ element.classList.add("correct")});
 // yes.addEventListener("click", ()=>{ console.log("yes")});
 
   //get the answer by comparing the id of the clicked option
