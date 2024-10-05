@@ -54,7 +54,7 @@ function resetDefinitionButton() {
 let read; 
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
-
+  answerKnownContainer.classList.add("hide");
   answerText.classList.add("hide");
   nextButton.classList.add("hide");
   resetDefinitionButton();
@@ -105,10 +105,12 @@ function getNewQuestion() {
 yes.innerText = "yes";
 yes.classList.add("btn");
 yes.style.backgroundColor = "green";
+yes.setAttribute("onclick", "showHideNextButton()");
 const no = document.createElement("button");
 no.innerText = "no";
 no.style.backgroundColor = "red" ;
 no.classList.add("btn");
+no.setAttribute("onclick", "showHideNextButton()");
 optionContainer.appendChild(yes);
 optionContainer.appendChild(no);
 
@@ -130,8 +132,11 @@ function toggleDefinitionButton() {
 function showHideDefinition() {
   answerText.classList.toggle("hide");
   answerKnownContainer.classList.remove("hide");
-  nextButton.classList.remove("hide");
   toggleDefinitionButton();
+}
+
+function showHideNextButton(){
+  nextButton.classList.remove("hide");
 }
 
 function getResult(element) {
