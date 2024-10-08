@@ -123,6 +123,7 @@ function toggleDefinitionButton() {
   showDefinitionButton.classList.toggle("active");
   if (!showDefinitionButton.classList.contains("active")) {
     showDefinitionButton.innerText = "Show definition";
+    synth.cancel();
   } else if (showDefinitionButton.classList.contains("active")) {
     read(currentQuestion.a);
     showDefinitionButton.innerText = "Hide definition";
