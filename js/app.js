@@ -6,6 +6,13 @@ window.speechSynthesis.addEventListener("voiceschanged", function () {
   voices = window.speechSynthesis.getVoices();
 });
 
+const cancelSpeech = () =>{
+  if(synth.speaking){
+    synth.cancel();
+  console.log("speech cancelled");
+  }
+}
+
 const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
 const readBtn = document.querySelector("#read-btn");
 const body = document.querySelector("body");
@@ -27,6 +34,8 @@ const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(
   ".questions-asked-container"
 ); // questions asked container (results screen)
+
+
 
 let questionCounter = 0;
 let currentQuestion;
@@ -85,7 +94,8 @@ function getNewQuestion() {
   
 
   readBtn.addEventListener("click", () => {
-    synth.cancel();
+    // synth.cancel();
+    cancelSpeech();
     read(currentQuestion.q);
   });
 
@@ -173,13 +183,15 @@ showDefinitionButton.focus();
   questionCounter++;
 }
 
-function toggleDefinitionButton() {
+function toggleDefinitionButtonText() {
   showDefinitionButton.classList.toggle("active");
   if (!showDefinitionButton.classList.contains("active")) {
     showDefinitionButton.innerText = "Show definition";
-    synth.cancel();
+    cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
-    read(currentQuestion.definition);
+    // if(!synth.speaking){
+      setTimeout(read(currentQuestion.definition), 600);
+    // }
     showDefinitionButton.innerText = "Hide definition";
   }
 }
@@ -189,7 +201,7 @@ function showHideDefinition() {
   if (nextButton.classList.contains("hide")) {
   answerKnownContainer.classList.remove("hide");
   }
-  toggleDefinitionButton();
+  toggleDefinitionButtonText();
 }
 
 function showHideNextButton(){
@@ -253,7 +265,7 @@ function updateAnswerIndicator(markType) {
 }
 
 function next() {
-  synth.cancel();
+  cancelSpeech();
   // document.removeEventListener("keydown", pressEnterForNextQu);
   if (questionCounter >= questionLimit) {
     quizOver();
