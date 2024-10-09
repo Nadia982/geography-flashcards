@@ -234,14 +234,14 @@ function getResult(element) {
 
 //   //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
-    answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}</p>`;
+    answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
 //     // add green colour if user selects correct option
 element.classList.add("correct");
 //     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
   } else {
-    answerMessage.innerHTML = `<p>You selected that you <em>do not know</em> the definition for ${currentQuestion.q}</p>`;
+    answerMessage.innerHTML = `<p>You selected that you <em>do not know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
     // add red colour if user selects incorrect option
     element.classList.add("incorrect");
     //add a cross mark to the answer indicator
