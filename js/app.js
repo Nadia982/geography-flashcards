@@ -7,7 +7,8 @@ window.speechSynthesis.addEventListener("voiceschanged", function () {
 });
 
 const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
-
+const readBtn = document.querySelector("#read-btn");
+const body = document.querySelector("body");
 const questionNumber = document.querySelector(".question-number"); //question number appears here
 const questionText = document.querySelector(".question-text"); //question text appears here
 const answerText = document.querySelector(".answer-text"); //answer text appears here
@@ -168,7 +169,7 @@ function getNewQuestion() {
 // optionContainer.appendChild(no);
 
 
-  readBtn.focus();
+showDefinitionButton.focus();
   questionCounter++;
 }
 
@@ -395,6 +396,4 @@ window.onload = function () {
   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
 };
 
-//Fetching DOM elements
-const readBtn = document.querySelector("#read-btn");
-const body = document.querySelector("body");
+
