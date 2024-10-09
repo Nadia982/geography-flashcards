@@ -142,9 +142,7 @@ answerMessage.classList.add("hide");
     option.innerHTML = currentQuestion.options[optionIndex];
     option.id = optionIndex;
     // option.classList.add("
-    const yes = document.getElementById("0");
-    console.log(yes)
-    
+        
     option.style.animationDelay = animationDelay + "s";
     option.className = "option";
     if(option.id === "0"){
@@ -168,11 +166,6 @@ answerMessage.classList.add("hide");
  // optionContainer.innerHTML = "";
   // const optionsLength = currentQuestion.options.length;
   // console.log(optionsLength)
-//   const yes = document.createElement("button");
-// yes.innerText = "yes";
-// yes.classList.add("btn");
-// yes.style.backgroundColor = "green";
-// yes.setAttribute("onclick", "showHideNextButton()");
 // const no = document.createElement("button");
 // no.innerText = "no";
 // no.style.backgroundColor = "red" ;
@@ -199,12 +192,16 @@ function toggleDefinitionButtonText() {
   }
 }
 
+
+
 function showHideDefinition() {
+  const yes = document.querySelector(".yes");
   answerText.classList.toggle("hide");
   if (nextButton.classList.contains("hide")) {
   answerKnownContainer.classList.remove("hide");
   }
   toggleDefinitionButtonText();
+  yes.focus();
 }
 
 function showHideNextButton(){
