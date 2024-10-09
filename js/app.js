@@ -84,6 +84,7 @@ function getNewQuestion() {
   
 
   readBtn.addEventListener("click", () => {
+    synth.cancel();
     read(currentQuestion.q);
   });
 
