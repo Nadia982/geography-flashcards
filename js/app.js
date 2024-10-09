@@ -196,12 +196,22 @@ function toggleDefinitionButtonText() {
 
 function showHideDefinition() {
   const yes = document.querySelector(".yes");
+  const no = document.querySelector(".no");
   answerText.classList.toggle("hide");
   if (nextButton.classList.contains("hide")) {
   answerKnownContainer.classList.remove("hide");
   }
   toggleDefinitionButtonText();
   yes.focus();
+  
+  yes.addEventListener("keydown", (e)=>{ if(e.keyCode == '39'){
+    no.focus();
+  } else if (e.keyCode == '37'){
+    yes.focus();
+  }})
+  no.addEventListener("keydown", (e)=>{ if(e.keyCode == '37'){
+    yes.focus();
+  }})
 }
 
 function showHideNextButton(){
