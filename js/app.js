@@ -206,10 +206,16 @@ function showHideDefinition() {
   
   yes.addEventListener("keydown", (e)=>{ if(e.keyCode == '39'){
     no.focus();
-  } else if (e.keyCode == '37'){
-    yes.focus();
+  } else if (e.keyCode == '38'){
+    showDefinitionButton.focus();
   }})
   no.addEventListener("keydown", (e)=>{ if(e.keyCode == '37'){
+    yes.focus();
+  }else if (e.keyCode == '38'){
+    showDefinitionButton.focus();
+  }
+})
+  showDefinitionButton.addEventListener("keydown", (e)=>{ if(e.keyCode == '40'){
     yes.focus();
   }})
 }
