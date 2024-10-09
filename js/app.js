@@ -223,7 +223,7 @@ function showHideNextButton(){
 function getResult(element) {
   unclickableOptions();
    const id = parseInt(element.id);
-  const answerText = element.innerHTML;
+  // const answerText = element.innerHTML;
   yourAnswersList.push(answerText);
 
 //   //get the answer by comparing the id of the clicked option

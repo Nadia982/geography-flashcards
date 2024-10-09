@@ -35,7 +35,7 @@ body {
   min-height: 70vh;
   max-width: 700px;
   background-color: #fff;
-  margin: 1rem auto;
+  margin: .5rem auto;
   padding: 0.5rem 1.2rem 1.2rem;
   border-radius: 1rem;
   animation: fadeInRight 1s ease;
@@ -104,12 +104,12 @@ button:disabled {
 .quiz-box .next-and-answer-indicator-container {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: .5rem;
 }
 
 .next-btn {
-  margin: 0;
+  margin: .5rem 0;
   border: 1px solid white;
 }
 
@@ -132,27 +132,29 @@ button:disabled {
 
 .quiz-box .question-container {
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
   align-items: center;
   gap: 2rem;
   margin-bottom: 1rem;
+  height: 5.5rem;
 }
 .quiz-box {
   margin: 1rem auto;
 }
 
 .question-text {
+  flex-basis: 0 0 30%;
   font-size: 1.8rem;
   color: #000;
   line-height: var(--line-height);
   margin: 1rem 0;
   font-weight: 700;
-  height: 3.5rem;
+  
 }
 
 .answer-text {
   font-size: 1.4rem;
-  flex-basis: 70%;
+  flex-basis: 0 0 65%;
   color: #000;
   line-height: var(--line-height);
   margin: 0;
@@ -167,12 +169,13 @@ button:disabled {
 #read-btn,
 #show-definition {
   min-height: 3rem;
-  flex: 0 2 10vw;
+  flex: 0 0 10vw;
   text-align: center;
   padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  
   gap: 0.7rem;
   font-weight: 400;
   margin-bottom: 1rem;
@@ -197,7 +200,7 @@ button:disabled {
   padding: 0.8rem;
   font-size: 1.15rem;
   border-radius: 0.5rem;
-  margin: 1rem 0;
+  margin: .5rem 0;
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 0.3s forwards;
@@ -227,7 +230,8 @@ button:disabled {
 
 .quiz-box .option-container {
   display: flex;
-  gap: 2rem;
+  /* This gap is for the 'yes' and 'no' buttons */
+  gap: 2rem; 
   width: 50%;
 }
 
@@ -357,7 +361,7 @@ button:disabled {
   } */
 .results-btn-container {
   display: flex;
-  gap: 1rem;
+  /* gap: 1rem; */
   justify-content: center;
   width: 90%;
   max-width: 350px;
