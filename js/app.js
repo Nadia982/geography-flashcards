@@ -30,6 +30,7 @@ const showDefinitionButton = document.getElementById("show-definition"); // show
 // const totalAvailableQuestions= document.querySelector(".total-available-questions"); // total available questions
 // const questionLimit = 5;
 const answerKnownContainer = document.querySelector(".answer-known-container");
+const answerMessage = document.querySelector(".answer-message");
 const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(
   ".questions-asked-container"
@@ -65,6 +66,8 @@ let read;
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
   answerKnownContainer.classList.add("hide");
+
+answerMessage.classList.add("hide");
   answerText.classList.add("hide");
   nextButton.classList.add("hide");
   resetDefinitionButton();
@@ -218,17 +221,20 @@ function getResult(element) {
 
 //   //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
+    answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}</p>`;
 //     // add green colour if user selects correct option
 element.classList.add("correct");
 //     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
   } else {
+    answerMessage.innerHTML = `<p>You selected that you <em>do not know</em> the definition for ${currentQuestion.q}</p>`;
     // add red colour if user selects incorrect option
     element.classList.add("incorrect");
     //add a cross mark to the answer indicator
     updateAnswerIndicator("incorrect");
   }
+  answerMessage.classList.remove("hide");
   attempt++;
   nextButton.classList.remove("hide");
   // answerText.classList.remove("hide");
@@ -245,7 +251,9 @@ function pressEnterForNextQu(e) {
 // make other options unclickable once user has selected an option
 function unclickableOptions() {
   answerKnownContainer.classList.add("hide");
-  console.log("answerKnownContainer hidden from unclickable options function");
+// answerMessage.innerText = "hi";
+
+  // answerMessage.style.backgroundColor ="red";
 }
 
 //creating answersIndicator box, and answer indicator circles for each question

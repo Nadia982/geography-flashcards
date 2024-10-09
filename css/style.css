@@ -142,17 +142,17 @@ button:disabled {
 }
 
 .question-text {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #000;
   line-height: var(--line-height);
   margin: 1rem 0;
   font-weight: 700;
+  height: 3.5rem;
 }
 
 .answer-text {
   font-size: 1.5rem;
-  flex-basis: 70%;
-  /* width: 50%; */
+  flex-basis: 60%;
   color: #000;
   line-height: var(--line-height);
   margin: 0;
@@ -210,10 +210,10 @@ button:disabled {
   outline: 3px solid black;
 }
 
-.option.already-answered {
+/* .option.already-answered {
   background-color: #aaa;
   pointer-events: none;
-}
+} */
 
 @keyframes fadeIn {
   0% {
@@ -377,9 +377,15 @@ button:disabled {
   visibility: hidden;
 }
 
-.answer-known-container.hide {
-  visibility: hidden;
+.answer-known-container.hide, .answer-message.hide {
+  display: none;
 }
+em {
+  text-decoration: underline;
+  font-style: normal;
+  font-weight: bold;
+}
+
 .yes {
   background-color: var(--green);
 }
