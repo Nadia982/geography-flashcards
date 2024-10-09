@@ -79,7 +79,7 @@ function getNewQuestion() {
   setTimeout(read(currentQuestion.q), 400);
   //set question text
   questionText.innerHTML = currentQuestion.q;
-  answerText.innerHTML = currentQuestion.definition;
+  answerText.innerHTML = currentQuestion.a;
   questionsAskedList.push(currentQuestion);
   
 
@@ -124,27 +124,15 @@ function getNewQuestion() {
     availableOptions.splice(index2, 1);
 
     const option = document.createElement("button");
-
     option.innerHTML = currentQuestion.options[optionIndex];
     option.id = optionIndex;
-    // option.classList.add("
-    const yes = document.getElementById("0");
-    console.log(yes)
-    
     option.style.animationDelay = animationDelay + "s";
-    option.className = "option";
-    if(option.id === "0"){
-      option.className += " yes";
-    } else {
-      option.className += " no";
-    }
-    
+  
     animationDelay = animationDelay + 0.1;
 
-
+    option.className = "option";
     optionContainer.appendChild(option);
     option.setAttribute("onclick", "getResult(this)");
-
   }
     // option.addEventListener("keydown", pressEnterToGetResult);
 
@@ -178,16 +166,14 @@ function toggleDefinitionButton() {
     showDefinitionButton.innerText = "Show definition";
     synth.cancel();
   } else if (showDefinitionButton.classList.contains("active")) {
-    read(currentQuestion.definition);
+    read(currentQuestion.a);
     showDefinitionButton.innerText = "Hide definition";
   }
 }
 
 function showHideDefinition() {
   answerText.classList.toggle("hide");
-  if (nextButton.classList.contains("hide")) {
   answerKnownContainer.classList.remove("hide");
-  }
   toggleDefinitionButton();
 }
 
@@ -198,15 +184,19 @@ function showHideNextButton(){
 
 
 function getResult(element) {
-  unclickableOptions();
-   const id = parseInt(element.id);
   const answerText = element.innerHTML;
   yourAnswersList.push(answerText);
+  console.log(yourAnswersList);
 
+// yes.addEventListener("click", console.log("hi"));
+// yes.addEventListener("click", ()=>{ console.log("yes")});
+
+const processAnswer = ()=>{
+  console.log("hi") 
 //   //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
 //     // add green colour if user selects correct option
-element.classList.add("correct");
+   
 //     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
@@ -218,8 +208,8 @@ element.classList.add("correct");
   }
   attempt++;
   nextButton.classList.remove("hide");
-  // answerText.classList.remove("hide");
-  nextButton.focus();
+  answerText.classList.remove("hide");
+}
 }
 
 //add shortcut key for the return key to go to the next question
@@ -231,8 +221,11 @@ function pressEnterForNextQu(e) {
 
 // make other options unclickable once user has selected an option
 function unclickableOptions() {
-  answerKnownContainer.classList.add("hide");
-  console.log("answerKnownContainer hidden from unclickable options function");
+  const optionsLength = optionContainer.children.length;
+  for (let i = 0; i < optionsLength; i++) {
+    optionContainer.children[i].classList.add("already-answered");
+    optionContainer.children[i].setAttribute("disabled", "");
+  }
 }
 
 //creating answersIndicator box, and answer indicator circles for each question
@@ -252,7 +245,6 @@ function updateAnswerIndicator(markType) {
 }
 
 function next() {
-  synth.cancel();
   // document.removeEventListener("keydown", pressEnterForNextQu);
   if (questionCounter >= questionLimit) {
     quizOver();
@@ -305,9 +297,9 @@ function displayQuestions() {
     //   }
     questionAskedCell.setAttribute("data-cell", "Question: ");
 
-    //create a table cell to show the definition
+    //create a table cell to show the English translation
     const translationCell = document.createElement("td");
-    translationCell.innerHTML = questionsAskedList[i].definition;
+    translationCell.innerHTML = questionsAskedList[i].a;
     translationCell.setAttribute("data-cell", "Translation: ");
 
     // create a table cell to show the given answer
@@ -318,7 +310,7 @@ function displayQuestions() {
     //create a table cell to show the correct answer
     const correctAnswerCell = document.createElement("td");
     correctAnswerCell.innerHTML =
-      questionsAskedList[i].options[questionsAskedList[i].a];
+      questionsAskedList[i].options[questionsAskedList[i].answer];
     correctAnswerCell.setAttribute("data-cell", "Correct answer: ");
 
     //create a table cell to show if the given answer was right or wrong
