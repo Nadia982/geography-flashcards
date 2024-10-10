@@ -105,7 +105,7 @@ button:disabled {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  /* margin-top: .5rem; */
+  margin-top: 1rem;
 }
 
 .next-btn {
@@ -136,7 +136,7 @@ button:disabled {
   align-items: center;
   gap: 2rem;
   margin-bottom: 1rem;
-  height: 6.5rem;
+  min-height: 6.5rem;
 }
 .quiz-box {
   margin: 0.2rem auto;
@@ -286,7 +286,7 @@ button:disabled {
 }
 
 .quiz-box .answers-indicator div {
-  height: 1.7rem;
+  min-height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
   display: inline-block;
@@ -377,7 +377,7 @@ button:disabled {
 }
 
 .answer-info-container{
-  height: 5rem;
+  min-height: 5rem;
 }
 
 .answer-text.hide {
@@ -388,6 +388,12 @@ button:disabled {
  /* visibility: hidden; */
  display: none;
 }
+
+.did-you-know {
+  margin-bottom: 1rem;
+
+}
+
 em {
   text-decoration: underline;
   font-style: normal;
@@ -448,7 +454,7 @@ em {
   }
 
   .quiz-box .next-and-answer-indicator-container {
-    margin: 0 auto;
+    
     flex-direction: column;
     gap: 2rem;
     justify-content: flex-start;
@@ -471,4 +477,5 @@ em {
   .btn {
     padding: 0.7rem 1rem;
   }
+  
 }
