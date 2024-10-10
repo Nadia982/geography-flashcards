@@ -26,13 +26,13 @@ body {
 .browser-advice {
   color: #fff;
   margin: 0.3rem 0 0 0;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-align: center;
 }
 
 .custom-box {
   width: 90%;
-  min-height: 92vh;
+  min-height: 90vh;
   max-width: 700px;
   background-color: #fff;
   margin: .5rem auto 0;

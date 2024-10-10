@@ -6,14 +6,16 @@ window.speechSynthesis.addEventListener("voiceschanged", function () {
   voices = window.speechSynthesis.getVoices();
 });
 
-const cancelSpeech = () =>{
-  if(synth.speaking){
+const cancelSpeech = () => {
+  if (synth.speaking) {
     synth.cancel();
-  console.log("speech cancelled");
+    console.log("speech cancelled");
   }
-}
+};
 
-const englishMaleVoice = voices.find((voice) => voice.name === "Google UK English Male");
+const englishMaleVoice = voices.find(
+  (voice) => voice.name === "Google UK English Male"
+);
 const readBtn = document.querySelector("#read-btn");
 const body = document.querySelector("body");
 const questionNumber = document.querySelector(".question-number"); //question number appears here
@@ -36,8 +38,6 @@ const questionsAskedContainer = document.querySelector(
   ".questions-asked-container"
 ); // questions asked container (results screen)
 
-
-
 let questionCounter = 0;
 let currentQuestion;
 let availableQuestions = [];
@@ -55,19 +55,18 @@ function setAvailableQuestions() {
   for (let item of questionIndices) {
     availableQuestions.push(questions[item]);
   }
-
 }
 
 function resetDefinitionButton() {
   showDefinitionButton.classList.remove("active");
   showDefinitionButton.innerText = "Show definition";
 }
-let read; 
+let read;
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
   answerKnownContainer.classList.add("hide");
 
-answerMessage.classList.add("hide");
+  answerMessage.classList.add("hide");
   answerText.classList.add("hide");
   nextButton.classList.add("hide");
   resetDefinitionButton();
@@ -85,7 +84,7 @@ answerMessage.classList.add("hide");
     speech.rate = 0.9;
     window.speechSynthesis.speak(speech);
   };
-  
+
   const questionIndex = availableQuestions[questionCounter];
   currentQuestion = questionIndex;
   console.log(currentQuestion.q);
@@ -94,14 +93,12 @@ answerMessage.classList.add("hide");
   questionText.innerHTML = currentQuestion.q;
   answerText.innerHTML = currentQuestion.definition;
   questionsAskedList.push(currentQuestion);
-  
 
   readBtn.addEventListener("click", () => {
     // synth.cancel();
     cancelSpeech();
     read(currentQuestion.q);
   });
-
 
   // show question image if "img" property exists
 
@@ -127,8 +124,7 @@ answerMessage.classList.add("hide");
 
   //create options in html
   for (let i = 0; i < optionsLength; i++) {
-    const optionIndex =
-    availableOptions[0];
+    const optionIndex = availableOptions[0];
     //   availableOptions[Math.floor(Math.random() * availableOptions.length)];
 
     //get the position of optionIndex from availableOptions
@@ -142,40 +138,36 @@ answerMessage.classList.add("hide");
     option.innerHTML = currentQuestion.options[optionIndex];
     option.id = optionIndex;
     // option.classList.add("
-        
+
     option.style.animationDelay = animationDelay + "s";
     option.className = "option";
-    if(option.id === "0"){
+    if (option.id === "0") {
       option.className += " yes";
     } else {
       option.className += " no";
     }
-    
-    animationDelay = animationDelay + 0.1;
 
+    animationDelay = animationDelay + 0.1;
 
     optionContainer.appendChild(option);
     option.setAttribute("onclick", "getResult(this)");
-
   }
-    // option.addEventListener("keydown", pressEnterToGetResult);
-
+  // option.addEventListener("keydown", pressEnterToGetResult);
 
   //let animationDelay = 0.1;
 
- // optionContainer.innerHTML = "";
+  // optionContainer.innerHTML = "";
   // const optionsLength = currentQuestion.options.length;
   // console.log(optionsLength)
-// const no = document.createElement("button");
-// no.innerText = "no";
-// no.style.backgroundColor = "red" ;
-// no.classList.add("btn");
-// no.setAttribute("onclick", "showHideNextButton()");
-// optionContainer.appendChild(yes);
-// optionContainer.appendChild(no);
+  // const no = document.createElement("button");
+  // no.innerText = "no";
+  // no.style.backgroundColor = "red" ;
+  // no.classList.add("btn");
+  // no.setAttribute("onclick", "showHideNextButton()");
+  // optionContainer.appendChild(yes);
+  // optionContainer.appendChild(no);
 
-
-showDefinitionButton.focus();
+  showDefinitionButton.focus();
   questionCounter++;
 }
 
@@ -186,61 +178,64 @@ function toggleDefinitionButtonText() {
     cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
     // if(!synth.speaking){
-      setTimeout(read(currentQuestion.definition), 600);
+    setTimeout(read(currentQuestion.definition), 600);
     // }
     showDefinitionButton.innerText = "Hide definition";
   }
 }
-
-
 
 function showHideDefinition() {
   const yes = document.querySelector(".yes");
   const no = document.querySelector(".no");
   answerText.classList.toggle("hide");
   if (nextButton.classList.contains("hide")) {
-  answerKnownContainer.classList.remove("hide");
+    answerKnownContainer.classList.remove("hide");
   }
   toggleDefinitionButtonText();
   yes.focus();
-  
-  yes.addEventListener("keydown", (e)=>{ if(e.keyCode == '39'){
-    no.focus();
-  } else if (e.keyCode == '38'){
-    showDefinitionButton.focus();
-  }})
-  no.addEventListener("keydown", (e)=>{ if(e.keyCode == '37'){
-    yes.focus();
-  }else if (e.keyCode == '38'){
-    showDefinitionButton.focus();
-  }
-})
-  showDefinitionButton.addEventListener("keydown", (e)=>{ if(e.keyCode == '40'){
-    yes.focus();
-  }})
+
+  yes.addEventListener("keydown", (e) => {
+    if (e.keyCode == "39") {
+      no.focus();
+    } else if (e.keyCode == "38") {
+      showDefinitionButton.focus();
+    }
+  });
+  no.addEventListener("keydown", (e) => {
+    if (e.keyCode == "37") {
+      yes.focus();
+    } else if (e.keyCode == "38") {
+      showDefinitionButton.focus();
+    }
+  });
+  showDefinitionButton.addEventListener("keydown", (e) => {
+    if (e.keyCode == "40") {
+      yes.focus();
+    }
+  });
 }
 
-function showHideNextButton(){
+function showHideNextButton() {
   nextButton.classList.remove("hide");
 }
 
-
-
 function getResult(element) {
   unclickableOptions();
-   const id = parseInt(element.id);
+  const id = parseInt(element.id);
   // const answerText = element.innerHTML;
-  yourAnswersList.push(answerText);
+  ;
 
-//   //get the answer by comparing the id of the clicked option
+  //   //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
+    yourAnswersList.push("yes")
     answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
-//     // add green colour if user selects correct option
-element.classList.add("correct");
-//     //add a tick mark to the answer indicator
+    //     // add green colour if user selects correct option
+    element.classList.add("correct");
+    //     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
   } else {
+    yourAnswersList.push("no");
     answerMessage.innerHTML = `<p>You selected that you <em>do not know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
     // add red colour if user selects incorrect option
     element.classList.add("incorrect");
@@ -264,7 +259,7 @@ function pressEnterForNextQu(e) {
 // make other options unclickable once user has selected an option
 function unclickableOptions() {
   answerKnownContainer.classList.add("hide");
-// answerMessage.innerText = "hi";
+  // answerMessage.innerText = "hi";
 
   // answerMessage.style.backgroundColor ="red";
 }
@@ -286,6 +281,7 @@ function updateAnswerIndicator(markType) {
 }
 
 function next() {
+  console.log(yourAnswersList);
   cancelSpeech();
   // document.removeEventListener("keydown", pressEnterForNextQu);
   if (questionCounter >= questionLimit) {
@@ -316,49 +312,26 @@ function displayQuestions() {
     //create table row for each question
     const questionRow = document.createElement("tr");
 
-    //create a cell to show the question number
+    // Column 1 - create a cell to show the question number
     const questionNoCell = document.createElement("td");
     questionNoCell.textContent = i + 1;
     questionNoCell.setAttribute("data-cell", "Question no: ");
 
-    //create a cell to show the question text
+    // Column 2 - create a cell to show the question text
     const questionAskedCell = document.createElement("td");
-    //   if (questionsAskedList[i].hasOwnProperty("q3")) {
-    //     questionAskedCell.innerHTML =
-    //       questionsAskedList[i].q +
-    //       " " +
-    //       questionsAskedList[i].q2 +
-    //       " " +
-    //       questionsAskedList[i].q3;
-    //   } else if (questionsAskedList[i].hasOwnProperty("q2")) {
-    //     let q2QuestionContents = questionsAskedList[i].q + " " + questionsAskedList[i].q2;
-    //     console.log(q2QuestionContents);
-    //     questionAskedCell.innerHTML = q2QuestionContents;
-    //   } else {
     questionAskedCell.innerHTML = questionsAskedList[i].q;
-    //   }
     questionAskedCell.setAttribute("data-cell", "Question: ");
 
-    //create a table cell to show the definition
+    // Column 3 - create a table cell to show the definition
     const translationCell = document.createElement("td");
     translationCell.innerHTML = questionsAskedList[i].definition;
     translationCell.setAttribute("data-cell", "Translation: ");
 
-    // create a table cell to show the given answer
-    const yourAnswerCell = document.createElement("td");
-    yourAnswerCell.innerHTML = yourAnswersList[i];
-    yourAnswerCell.setAttribute("data-cell", "You answered: ");
-
-    //create a table cell to show the correct answer
-    const correctAnswerCell = document.createElement("td");
-    correctAnswerCell.innerHTML =
-      questionsAskedList[i].options[questionsAskedList[i].a];
-    correctAnswerCell.setAttribute("data-cell", "Correct answer: ");
-
-    //create a table cell to show if the given answer was right or wrong
+      // Column 4 - create a table cell to show if the given answer was right or wrong
     const resultCell = document.createElement("td");
-    if (yourAnswerCell.innerHTML === correctAnswerCell.innerHTML) {
-      resultCell.innerHTML =
+
+    if (yourAnswersList[i] === "yes"){
+        resultCell.innerHTML =
         "<img src='./images/correct.png' alt = 'correct' width='30'/>";
       resultCell.classList.add("correct");
     } else {
@@ -370,8 +343,6 @@ function displayQuestions() {
     questionRow.appendChild(questionNoCell);
     questionRow.appendChild(questionAskedCell);
     questionRow.appendChild(translationCell);
-    //   questionRow.appendChild(yourAnswerCell);
-    //   questionRow.appendChild(correctAnswerCell);
     questionRow.appendChild(resultCell);
     //Add the new row to questionsAskedContainer
     questionsAskedContainer.appendChild(questionRow);
@@ -428,5 +399,3 @@ function startQuiz() {
 window.onload = function () {
   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
 };
-
-
