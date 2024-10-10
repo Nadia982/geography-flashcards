@@ -64,8 +64,8 @@ function resetDefinitionButton() {
 let read;
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
+  answerKnownContainer.classList.remove("keep-hidden");
   answerKnownContainer.classList.add("hide");
-
   answerMessage.classList.add("hide");
   answerText.classList.add("hide");
   nextButton.classList.add("hide");
@@ -87,10 +87,9 @@ function getNewQuestion() {
 
   const questionIndex = availableQuestions[questionCounter];
   currentQuestion = questionIndex;
-  console.log(currentQuestion.q);
-  setTimeout(read(currentQuestion.q), 400);
   //set question text
   questionText.innerHTML = currentQuestion.q;
+  setTimeout(read(currentQuestion.q), 400);
   answerText.innerHTML = currentQuestion.definition;
   questionsAskedList.push(currentQuestion);
 
@@ -115,7 +114,6 @@ function getNewQuestion() {
   optionContainer.innerHTML = "";
 
   // push options into availableOptions array
-
   for (let i = 0; i < optionsLength; i++) {
     availableOptions.push(i);
   }
@@ -152,21 +150,6 @@ function getNewQuestion() {
     optionContainer.appendChild(option);
     option.setAttribute("onclick", "getResult(this)");
   }
-  // option.addEventListener("keydown", pressEnterToGetResult);
-
-  //let animationDelay = 0.1;
-
-  // optionContainer.innerHTML = "";
-  // const optionsLength = currentQuestion.options.length;
-  // console.log(optionsLength)
-  // const no = document.createElement("button");
-  // no.innerText = "no";
-  // no.style.backgroundColor = "red" ;
-  // no.classList.add("btn");
-  // no.setAttribute("onclick", "showHideNextButton()");
-  // optionContainer.appendChild(yes);
-  // optionContainer.appendChild(no);
-
   showDefinitionButton.focus();
   questionCounter++;
 }
@@ -174,12 +157,17 @@ function getNewQuestion() {
 function toggleDefinitionButtonText() {
   showDefinitionButton.classList.toggle("active");
   if (!showDefinitionButton.classList.contains("active")) {
+    // console.log("showDefinitionButton does not contain the class 'active'")
     showDefinitionButton.innerText = "Show definition";
     cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
-    // if(!synth.speaking){
-    setTimeout(read(currentQuestion.definition), 600);
-    // }
+      const readDefinition = setTimeout(read(currentQuestion.definition), 600);
+      readDefinition.onend = function(event) {
+        console.log('The read operation has begun.');
+      }
+      readDefinition.onend = function(event) {
+        console.log('Finished in ' + event.elapsedTime + ' seconds.');
+    };
     showDefinitionButton.innerText = "Hide definition";
   }
 }
@@ -187,13 +175,14 @@ function toggleDefinitionButtonText() {
 function showHideDefinition() {
   const yes = document.querySelector(".yes");
   const no = document.querySelector(".no");
-  answerText.classList.toggle("hide");
-  if (nextButton.classList.contains("hide")) {
-    answerKnownContainer.classList.remove("hide");
+  // answerText = definition text
+  answerText.classList.remove("hide");
+  // update this so it only shows this
+  if (!answerKnownContainer.classList.contains("keep-hidden")){ 
+  answerKnownContainer.classList.remove("hide");
   }
   toggleDefinitionButtonText();
   yes.focus();
-
   yes.addEventListener("keydown", (e) => {
     if (e.keyCode == "39") {
       no.focus();
@@ -221,8 +210,8 @@ function showHideNextButton() {
 
 function getResult(element) {
   answerKnownContainer.classList.add("hide");
+  answerKnownContainer.classList.add("keep-hidden");
   const id = parseInt(element.id);
-  // const answerText = element.innerHTML;
   ;
 
   //   //get the answer by comparing the id of the clicked option
@@ -249,13 +238,6 @@ function getResult(element) {
   nextButton.focus();
 }
 
-//add shortcut key for the return key to go to the next question
-function pressEnterForNextQu(e) {
-  if (e.key === "Enter") {
-    next();
-  }
-}
-
 //creating answersIndicator box, and answer indicator circles for each question
 function answersIndicator() {
   answersIndicatorContainer.innerHTML = "";
@@ -275,7 +257,6 @@ function updateAnswerIndicator(markType) {
 function next() {
   console.log(yourAnswersList);
   cancelSpeech();
-  // document.removeEventListener("keydown", pressEnterForNextQu);
   if (questionCounter >= questionLimit) {
     quizOver();
   } else {
