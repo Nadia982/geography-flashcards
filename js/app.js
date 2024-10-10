@@ -220,7 +220,7 @@ function showHideNextButton() {
 }
 
 function getResult(element) {
-  unclickableOptions();
+  answerKnownContainer.classList.add("hide");
   const id = parseInt(element.id);
   // const answerText = element.innerHTML;
   ;
@@ -254,14 +254,6 @@ function pressEnterForNextQu(e) {
   if (e.key === "Enter") {
     next();
   }
-}
-
-// make other options unclickable once user has selected an option
-function unclickableOptions() {
-  answerKnownContainer.classList.add("hide");
-  // answerMessage.innerText = "hi";
-
-  // answerMessage.style.backgroundColor ="red";
 }
 
 //creating answersIndicator box, and answer indicator circles for each question
