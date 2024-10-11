@@ -37,6 +37,7 @@ const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(
   ".questions-asked-container"
 ); // questions asked container (results screen)
+let yes;
 
 let questionCounter = 0;
 let currentQuestion;
@@ -82,12 +83,6 @@ function getNewQuestion() {
     utterThis.pitch = 0.7;
     utterThis.volume = 0.9;
     utterThis.rate = 0.9;  
-    utterThis.addEventListener("end", (event) => {
-      console.log(
-        `Utterance has finished being spoken after ${event.elapsedTime} seconds.`,
-      );
-
-    });
     
     const reading = window.speechSynthesis.speak(utterThis);
       };
@@ -176,27 +171,31 @@ function toggleDefinitionButtonText() {
       utterThis.voice = englishMaleVoice;
       utterThis.pitch = 0.7;
       utterThis.volume = 0.9;
-      utterThis.rate = 0.9;  
-      utterThis.addEventListener("end", (event) => {
-        console.log(
-          `Utterance has finished being spoken after ${event.elapsedTime} seconds.`,
-        );
-        if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
-          didYouKnowContainer.classList.remove("hide");
-          yes.focus();
-        }
-        // setTimeout(() => {if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
-        //   didYouKnowContainer.classList.remove("hide");
-        //   }}, 0 );
+      utterThis.rate = 0.9;
+           
+      utterThis.addEventListener("end", (e) => {
+        console.log(`Utterance has finished being spoken after ${e.elapsedTime} seconds`);
       }
+      
     );
+    const words = currentQuestion.definition.length;
+        const timeToWait = words*50;
+        console.log({timeToWait});
+        console.log(`currentQuestion.definition.length is ${currentQuestion.definition.length}`);
+        //         if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
+        //   didYouKnowContainer.classList.remove("hide");
+        // }
+        setTimeout(() => {if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
+          didYouKnowContainer.classList.remove("hide");
+          }}, timeToWait );
+        yes.focus();
      const reading = window.speechSynthesis.speak(utterThis);
   },200)
         }
 }
 
 function showHideDefinition() {
-  const yes = document.querySelector(".yes");
+  yes = document.querySelector(".yes");
   const no = document.querySelector(".no");
     definitionText.classList.toggle("hide");
     
