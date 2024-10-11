@@ -20,7 +20,7 @@ const readBtn = document.querySelector("#read-btn");
 const body = document.querySelector("body");
 const questionNumber = document.querySelector(".question-number"); //question number appears here
 const questionText = document.querySelector(".question-text"); //question text appears here
-const answerText = document.querySelector(".answer-text"); //answer text appears here
+const definitionText = document.querySelector(".answer-text"); //answer text appears here
 const optionContainer = document.querySelector(".option-container"); //option container
 const answersIndicatorContainer = document.querySelector(".answers-indicator"); //answer indicator container
 const homeBox = document.querySelector(".home-box"); //home box (initial screen)
@@ -31,7 +31,7 @@ const nextButton = document.querySelector(".next-btn"); // next button
 const showDefinitionButton = document.getElementById("show-definition"); // show definition button
 // const totalAvailableQuestions= document.querySelector(".total-available-questions"); // total available questions
 // const questionLimit = 5;
-const answerKnownContainer = document.querySelector(".answer-known-container");
+const didYouKnowContainer = document.querySelector(".did-you-know-container");
 const answerMessage = document.querySelector(".answer-message");
 const questionLimit = questions.length;
 const questionsAskedContainer = document.querySelector(
@@ -64,10 +64,10 @@ function resetDefinitionButton() {
 let read;
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
-  answerKnownContainer.classList.remove("keep-hidden");
-  answerKnownContainer.classList.add("hide");
+  didYouKnowContainer.classList.remove("keep-hidden");
+  didYouKnowContainer.classList.add("hide");
   answerMessage.classList.add("hide");
-  answerText.classList.add("hide");
+  definitionText.classList.add("hide");
   nextButton.classList.add("hide");
   resetDefinitionButton();
   //set question number
@@ -77,20 +77,28 @@ function getNewQuestion() {
 
   //get question
   read = (text) => {
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.voice = englishMaleVoice;
-    speech.pitch = 0.7;
-    speech.volume = 0.9;
-    speech.rate = 0.9;
-    window.speechSynthesis.speak(speech);
-  };
+    const utterThis = new SpeechSynthesisUtterance(text);
+    utterThis.voice = englishMaleVoice;
+    utterThis.pitch = 0.7;
+    utterThis.volume = 0.9;
+    utterThis.rate = 0.9;  
+    utterThis.addEventListener("end", (event) => {
+      console.log(
+        `Utterance has finished being spoken after ${event.elapsedTime} seconds.`,
+      );
+
+    });
+    
+    const reading = window.speechSynthesis.speak(utterThis);
+      };
 
   const questionIndex = availableQuestions[questionCounter];
   currentQuestion = questionIndex;
   //set question text
   questionText.innerHTML = currentQuestion.q;
-  setTimeout(read(currentQuestion.q), 400);
-  answerText.innerHTML = currentQuestion.definition;
+  setTimeout(()=>{ read(currentQuestion.q)}, 400);
+
+  definitionText.innerHTML = currentQuestion.definition;
   questionsAskedList.push(currentQuestion);
 
   readBtn.addEventListener("click", () => {
@@ -156,33 +164,44 @@ function getNewQuestion() {
 
 function toggleDefinitionButtonText() {
   showDefinitionButton.classList.toggle("active");
+  
   if (!showDefinitionButton.classList.contains("active")) {
     // console.log("showDefinitionButton does not contain the class 'active'")
     showDefinitionButton.innerText = "Show definition";
     cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
-      const readDefinition = setTimeout(read(currentQuestion.definition), 600);
-      readDefinition.onend = function(event) {
-        console.log('The read operation has begun.');
-      }
-      readDefinition.onend = function(event) {
-        console.log('Finished in ' + event.elapsedTime + ' seconds.');
-    };
     showDefinitionButton.innerText = "Hide definition";
-  }
+    setTimeout(()=>{
+      const utterThis = new SpeechSynthesisUtterance(currentQuestion.definition);
+      utterThis.voice = englishMaleVoice;
+      utterThis.pitch = 0.7;
+      utterThis.volume = 0.9;
+      utterThis.rate = 0.9;  
+      utterThis.addEventListener("end", (event) => {
+        console.log(
+          `Utterance has finished being spoken after ${event.elapsedTime} seconds.`,
+        );
+        if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
+          didYouKnowContainer.classList.remove("hide");
+          yes.focus();
+        }
+        // setTimeout(() => {if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
+        //   didYouKnowContainer.classList.remove("hide");
+        //   }}, 0 );
+      }
+    );
+     const reading = window.speechSynthesis.speak(utterThis);
+  },200)
+        }
 }
 
 function showHideDefinition() {
   const yes = document.querySelector(".yes");
   const no = document.querySelector(".no");
-  // answerText = definition text
-  answerText.classList.remove("hide");
-  // update this so it only shows this
-  if (!answerKnownContainer.classList.contains("keep-hidden")){ 
-  answerKnownContainer.classList.remove("hide");
-  }
+    definitionText.classList.toggle("hide");
+    
   toggleDefinitionButtonText();
-  yes.focus();
+  
   yes.addEventListener("keydown", (e) => {
     if (e.keyCode == "39") {
       no.focus();
@@ -204,17 +223,13 @@ function showHideDefinition() {
   });
 }
 
-function showHideNextButton() {
-  nextButton.classList.remove("hide");
-}
-
 function getResult(element) {
-  answerKnownContainer.classList.add("hide");
-  answerKnownContainer.classList.add("keep-hidden");
+  didYouKnowContainer.classList.add("hide");
+  didYouKnowContainer.classList.add("keep-hidden");
   const id = parseInt(element.id);
   ;
 
-  //   //get the answer by comparing the id of the clicked option
+  //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
     yourAnswersList.push("yes")
     answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
@@ -234,7 +249,7 @@ function getResult(element) {
   answerMessage.classList.remove("hide");
   attempt++;
   nextButton.classList.remove("hide");
-  // answerText.classList.remove("hide");
+  // definitionText.classList.remove("hide");
   nextButton.focus();
 }
 
@@ -255,7 +270,7 @@ function updateAnswerIndicator(markType) {
 }
 
 function next() {
-  console.log(yourAnswersList);
+  
   cancelSpeech();
   if (questionCounter >= questionLimit) {
     quizOver();

@@ -384,7 +384,7 @@ button:disabled {
   visibility: hidden;
 }
 
-.answer-known-container.hide, .answer-message.hide {
+.did-you-know-container.hide, .answer-message.hide {
  /* visibility: hidden; */
  display: none;
 }
