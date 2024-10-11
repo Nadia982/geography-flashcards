@@ -408,6 +408,13 @@ em {
   background-color: var(--red);
 }
 
+@media (max-width: 600px) {
+  .quiz-box .question-container {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 @media (max-width: 480px) {
   th {
     display: none;
@@ -442,9 +449,7 @@ em {
   .custom-box {
     margin: 1rem auto;
   }
-}
 
-@media (max-width: 480px) {
   .result-box .btn {
     margin-bottom: 1 rem;
   }
@@ -459,11 +464,6 @@ em {
     gap: 2rem;
     justify-content: flex-start;
     align-items: flex-start;
-  }
-
-  .quiz-box .question-container {
-    flex-direction: column;
-    gap: 0;
   }
 
   #read-btn,
