@@ -1,6 +1,6 @@
-/* * {
+* {
     border: 1px solid red;
-} */
+}
 
 :root {
   --primary-clr: #443850;
@@ -413,6 +413,9 @@ em {
     flex-direction: column;
     gap: 0;
   }
+.question-text, .answer-text{
+  width: 100%;
+}
 }
 
 @media (max-width: 480px) {
