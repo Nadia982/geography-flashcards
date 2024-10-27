@@ -149,7 +149,6 @@ button:disabled {
   line-height: var(--line-height);
   margin: 1rem 0;
   font-weight: 700;
-  
 }
 
 .answer-text {
@@ -196,6 +195,7 @@ button:disabled {
 }
 
 .quiz-box .option-container .option {
+  color: black;
   width: 50%;
   font-size: 1.15rem;
   border-radius: 0.5rem;
@@ -419,6 +419,14 @@ em {
 }
 
 @media (max-width: 480px) {
+  .custom-box {
+    width: 100%;
+  }
+
+  .question-text {
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+  }
   th {
     display: none;
   }
