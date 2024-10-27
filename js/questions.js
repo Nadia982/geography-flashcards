@@ -44,14 +44,14 @@ const questions = [
   {
     id: 7,
     q: "latitude",
-    definition: "(Imaginary) lines which wrap around the world, to show how far away from the equator somewhere is.",
+    definition: "(Imaginary) lines which wrap around the world horizontally, to show how far away from the equator somewhere is.",
     options: ["yes", "no"],
     a: 0,  
   },
   {
     id: 8,
     q: "longitude",
-    definition: "(Imaginary) lines which wrap over the world, to show how far away from the Prime Meridian somewhere is.",
+    definition: "(Imaginary) lines which wrap over the world vertically, to show how far away from the Prime Meridian somewhere is.",
     options: ["yes", "no"],
     a: 0,  
   },
