@@ -100,7 +100,7 @@ const questions = [
   {
     id: 15,
     q: "Prime Meridian",
-    definition: "An invisible line dividing Earth into east and west, that passes through Greenwich, UK",
+    definition: "An imaginary vertical line that divides Earth into east and west, that passes through Greenwich, UK",
     options: ["yes", "no"],
     a: 0,  
   },
