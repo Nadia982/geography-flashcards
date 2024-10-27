@@ -65,7 +65,7 @@ const questions = [
   {
     id: 10,
     q: "tropics",
-    definition: "The area of land between the Tropic of Cancer (in the Northern Hemisphere) and teh Tropic of Capricorn (in the Southern Hemisphere)",
+    definition: "The area of land between the Tropic of Cancer (in the Northern Hemisphere) and the Tropic of Capricorn (in the Southern Hemisphere)",
     options: ["yes", "no"],
     a: 0,  
   },
