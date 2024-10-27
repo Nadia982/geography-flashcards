@@ -72,7 +72,7 @@ const questions = [
   {
     id: 11,
     q: "physical map",
-    definition: "Shows physical features, e.g. rivers and relief (height differences in a landscape)",
+    definition: "Shows physical features, e.g. rivers and relief",
     options: ["yes", "no"],
     a: 0,  
   },
@@ -101,6 +101,13 @@ const questions = [
     id: 15,
     q: "Prime Meridian",
     definition: "An imaginary vertical line that divides Earth into east and west, that passes through Greenwich, UK",
+    options: ["yes", "no"],
+    a: 0,  
+  },
+  {
+    id: 16,
+    q: "relief",
+    definition: "height differences in a landscape",
     options: ["yes", "no"],
     a: 0,  
   },

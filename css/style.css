@@ -88,7 +88,6 @@ button:disabled {
 }
 
 .btn:focus {
-  /* outline: 3px solid var(--primary-clr); */
   outline: 3px solid black;
 }
 #read-btn:focus {
@@ -114,7 +113,6 @@ button:disabled {
 }
 
 .next-btn:focus {
-  /* outline: 3px solid var(--primary-clr); */
   outline: 3px solid black;
 }
 
@@ -196,7 +194,8 @@ button:disabled {
 
 .quiz-box .option-container .option {
   color: black;
-  width: 50%;
+  flex-basis: 45%;
+  flex-wrap: wrap;
   font-size: 1.15rem;
   border-radius: 0.5rem;
   margin: .2rem 0;
@@ -204,18 +203,13 @@ button:disabled {
   opacity: 0;
   animation: fadeIn 0.3s forwards;
   position: relative;
-  overflow: hidden;
   border: 1px solid white;
+  padding: 1rem 2rem;
 }
 
 .option:focus {
   outline: 3px solid black;
 }
-
-/* .option.already-answered {
-  background-color: #aaa;
-  pointer-events: none;
-} */
 
 @keyframes fadeIn {
   0% {
@@ -229,19 +223,13 @@ button:disabled {
 
 .quiz-box .option-container {
   display: flex;
-  /* This gap is for the 'yes' and 'no' buttons */
-  gap: 2rem; 
-  width: 50%;
+  gap: 1rem; 
 }
 
 .quiz-box .option-container .option.correct {
   background-color: green;
-  /* font-weight: bold; */
 }
 
-/* .option-container.hide{
-    visibility: hidden;
-  } */
 
 @keyframes slideInLeft {
   0% {
@@ -292,7 +280,6 @@ button:disabled {
   display: inline-block;
   background-color: #ccc;
   margin-right: 0.2rem;
-  /* margin-top: 0.7rem; */
 }
 
 .quiz-box .answers-indicator div.correct {
@@ -352,15 +339,10 @@ button:disabled {
   width: 20px;
   margin: 0 auto;
 }
-/* .result-box table td:nth-child(even) {
-    width: 1%;
-  }
-  .result-box table td:nth-child(odd) {
-    width: 30%;
-  } */
+
 .results-btn-container {
   display: flex;
-  /* gap: 1rem; */
+
   justify-content: center;
   width: 90%;
   max-width: 350px;
@@ -377,7 +359,7 @@ button:disabled {
 }
 
 .answer-info-container{
-  min-height: 5rem;
+  min-height: 8rem;
 }
 
 .answer-text.hide {
@@ -385,13 +367,11 @@ button:disabled {
 }
 
 .did-you-know-container.hide, .answer-message.hide {
- /* visibility: hidden; */
  display: none;
 }
 
 .did-you-know {
   margin-bottom: 1rem;
-
 }
 
 em {
@@ -426,6 +406,10 @@ em {
   .question-text {
     margin: 0 0 1rem 0;
     font-weight: 700;
+  }
+
+  .did-you-know {
+    margin-bottom: .5rem;
   }
   th {
     display: none;
@@ -472,7 +456,7 @@ em {
   .quiz-box .next-and-answer-indicator-container {
     
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     justify-content: flex-start;
     align-items: flex-start;
   }
