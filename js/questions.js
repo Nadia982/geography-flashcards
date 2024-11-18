@@ -264,4 +264,10 @@ const questions2 = [
   definition: "Where two plates move towards one another and crumple to form mountains.",
     options: ["yes", "no"],
    a: 0},
+   {
+    id: 24,
+    q: "Greek Chorus",
+  definition: "A group of performers who comment with a collective voice on the dramatic action. They speak and move as one.",
+    options: ["yes", "no"],
+   a: 0},
 ];
