@@ -367,20 +367,16 @@ button:disabled {
 
 .result-box.hide,
 .quiz-box.hide {
-  /* display: none; */
   visibility: hidden;
 }
 
-.answer-info-container{
-  min-height: 8rem;
-}
 
 .answer-text.hide {
   visibility: hidden;
 }
 
 .did-you-know-container.hide, .answer-message.hide {
- display: none;
+ visibility: hidden;
 }
 
 /* .did-you-know {

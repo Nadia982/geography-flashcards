@@ -71,6 +71,7 @@ function getNewQuestion() {
   definitionText.classList.add("hide");
   nextButton.classList.add("hide");
   resetDefinitionButton();
+  showDefinitionButton.classList.remove("hide");
   //set question number
   questionNumber.innerHTML = `Question ${
     questionCounter + 1
@@ -353,7 +354,7 @@ function resetQuiz() {
   questionsAskedList = [];
   yourAnswersList = [];
   removeQuestions();
-  showDefinitionButton.classList.remove("hide");
+  
 }
 
 function tryAgainQuiz() {
