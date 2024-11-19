@@ -133,7 +133,7 @@ button:disabled {
   justify-content: start;
   align-items: center;
   gap: 2rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   min-height: 6.5rem;
 }
 .quiz-box {
@@ -141,16 +141,16 @@ button:disabled {
 }
 
 .question-text {
-  width: 35%;
+  width: 45%;
   font-size: 1.8rem;
   color: #000;
   line-height: var(--line-height);
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
   font-weight: 700;
 }
 
 .answer-text {
-  width: 60%;
+  flex-basis: 50%;
   font-size: 1.4rem;
   color: #000;
   line-height: var(--line-height);
@@ -186,6 +186,10 @@ button:disabled {
 
 #show-definition:focus {
   outline: 3px solid black;
+}
+
+#show-definition.hide{
+    visibility: hidden;
 }
 
 #voice-select {
@@ -327,6 +331,10 @@ button:disabled {
   padding: 0.3rem;
 }
 
+.result-box td {
+  vertical-align: top;
+}
+
 .result-box table td:first-child,
 .result-box table td:last-child,
 .result-box table th:first-child,
@@ -337,12 +345,16 @@ button:disabled {
 
 .result-box table img {
   width: 20px;
-  margin: 0 auto;
+  margin: 1rem auto 0;
+}
+
+#question-table-img{
+  display: block;
+  width: 50px;
 }
 
 .results-btn-container {
   display: flex;
-
   justify-content: center;
   width: 90%;
   max-width: 350px;
@@ -355,7 +367,8 @@ button:disabled {
 
 .result-box.hide,
 .quiz-box.hide {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
 }
 
 .answer-info-container{
@@ -370,9 +383,9 @@ button:disabled {
  display: none;
 }
 
-.did-you-know {
+/* .did-you-know {
   margin-bottom: 1rem;
-}
+} */
 
 em {
   text-decoration: underline;
@@ -468,6 +481,8 @@ em {
     gap: 0.4rem;
     text-align: left;
   }
+
+
 
   .btn {
     padding: 0.7rem 1rem;

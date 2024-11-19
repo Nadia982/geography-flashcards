@@ -1,4 +1,5 @@
 console.clear();
+function $(type) {	return document.querySelector(type);}
 let voices = [];
 let synth = window.speechSynthesis; //Initialise SpeechSythesis API
 
@@ -16,25 +17,24 @@ const cancelSpeech = () => {
 const englishMaleVoice = voices.find(
   (voice) => voice.name === "Google UK English Male"
 );
-const readBtn = document.querySelector("#read-btn");
-const body = document.querySelector("body");
-const questionNumber = document.querySelector(".question-number"); //question number appears here
-const questionText = document.querySelector(".question-text"); //question text appears here
-const definitionText = document.querySelector(".answer-text"); //answer text appears here
-const optionContainer = document.querySelector(".option-container"); //option container
-const answersIndicatorContainer = document.querySelector(".answers-indicator"); //answer indicator container
-const homeBox = document.querySelector(".home-box"); //home box (initial screen)
-const quizBox = document.querySelector(".quiz-box"); // quiz box
-const resultBox = document.querySelector(".result-box"); // result box
-const nextButton = document.querySelector(".next-btn"); // next button
-// const button = document.querySelector(".btn"); //button
+const readBtn = $("#read-btn");
+const body = $("body");
+const questionNumber = $(".question-number"); //question number appears here
+const questionText = $(".question-text"); //question text appears here
+const definitionText = $(".answer-text"); //answer text appears here
+const optionContainer = $(".option-container"); //option container
+const answersIndicatorContainer = $(".answers-indicator"); //answer indicator container
+const homeBox = $(".home-box"); //home box (initial screen)
+const quizBox = $(".quiz-box"); // quiz box
+const resultBox = $(".result-box"); // result box
+const nextButton = $(".next-btn"); // next button
 const showDefinitionButton = document.getElementById("show-definition"); // show definition button
-// const totalAvailableQuestions= document.querySelector(".total-available-questions"); // total available questions
+// const totalAvailableQuestions= $(".total-available-questions"); // total available questions
 // const questionLimit = 5;
-const didYouKnowContainer = document.querySelector(".did-you-know-container");
-const answerMessage = document.querySelector(".answer-message");
+const didYouKnowContainer = $(".did-you-know-container");
+const answerMessage = $(".answer-message");
 const questionLimit = questions.length;
-const questionsAskedContainer = document.querySelector(
+const questionsAskedContainer = $(
   ".questions-asked-container"
 ); // questions asked container (results screen)
 let yes;
@@ -91,6 +91,12 @@ function getNewQuestion() {
   currentQuestion = questionIndex;
   //set question text
   questionText.innerHTML = currentQuestion.q;
+  if (currentQuestion.hasOwnProperty("img")) {
+    const img = document.createElement("img");
+    img.src = currentQuestion.img;
+        questionText.appendChild(img);
+  }
+
   setTimeout(()=>{ read(currentQuestion.q)}, 400);
 
   definitionText.innerHTML = currentQuestion.definition;
@@ -104,12 +110,6 @@ function getNewQuestion() {
 
   // show question image if "img" property exists
 
-  // if (currentQuestion.hasOwnProperty("img")) {
-  //   console.log(currentQuestion.img);
-  //   const img = document.createElement("img");
-  //   img.src = currentQuestion.img;
-  //   questionText.appendChild(img);
-  // }
   // set options
   // get the length of the list of options
   const optionsLength = currentQuestion.options.length;
@@ -161,7 +161,7 @@ function toggleDefinitionButtonText() {
   showDefinitionButton.classList.toggle("active");
   
   if (!showDefinitionButton.classList.contains("active")) {
-    // console.log("showDefinitionButton does not contain the class 'active'")
+   
     showDefinitionButton.innerText = "Show definition";
     cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
@@ -180,13 +180,11 @@ function toggleDefinitionButtonText() {
     );
     const words = currentQuestion.definition.length;
         const timeToWait = words*50;
-        console.log({timeToWait});
-        console.log(`currentQuestion.definition.length is ${currentQuestion.definition.length}`);
-        //         if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
-        //   didYouKnowContainer.classList.remove("hide");
-        // }
+        // console.log(`currentQuestion.definition.length is ${currentQuestion.definition.length}`);
+      
         setTimeout(() => {if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
           didYouKnowContainer.classList.remove("hide");
+          showDefinitionButton.classList.add("hide");
           }}, timeToWait );
         yes.focus();
      const reading = window.speechSynthesis.speak(utterThis);
@@ -195,8 +193,8 @@ function toggleDefinitionButtonText() {
 }
 
 function showHideDefinition() {
-  yes = document.querySelector(".yes");
-  const no = document.querySelector(".no");
+  yes = $(".yes");
+  const no = $(".no");
     definitionText.classList.toggle("hide");
     
   toggleDefinitionButtonText();
@@ -307,6 +305,13 @@ function displayQuestions() {
     // Column 2 - create a cell to show the question text
     const questionAskedCell = document.createElement("td");
     questionAskedCell.innerHTML = questionsAskedList[i].q;
+    if (questionsAskedList[i].hasOwnProperty("img")) {
+      const img2 = document.createElement("img");
+      img2.src = questionsAskedList[i].img;
+      img2.classList.add("question-table-img");
+      img2.setAttribute("id", "question-table-img");
+      questionAskedCell.appendChild(img2);
+    }
     questionAskedCell.setAttribute("data-cell", "Question: ");
 
     // Column 3 - create a table cell to show the definition
@@ -348,6 +353,7 @@ function resetQuiz() {
   questionsAskedList = [];
   yourAnswersList = [];
   removeQuestions();
+  showDefinitionButton.classList.remove("hide");
 }
 
 function tryAgainQuiz() {
