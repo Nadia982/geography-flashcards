@@ -409,9 +409,14 @@ em {
 .question-text, .answer-text{
   width: 100%;
 }
+.answer-text{
+  margin-bottom: 1rem;
+}
 }
 
 @media (max-width: 480px) {
+  
+  
   .custom-box {
     width: 100%;
   }
