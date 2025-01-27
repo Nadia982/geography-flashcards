@@ -1,5 +1,7 @@
 console.clear();
-function $(type) {	return document.querySelector(type);}
+function $(type) {
+  return document.querySelector(type);
+}
 let voices = [];
 let synth = window.speechSynthesis; //Initialise SpeechSythesis API
 
@@ -34,9 +36,7 @@ const showDefinitionButton = document.getElementById("show-definition"); // show
 const didYouKnowContainer = $(".did-you-know-container");
 const answerMessage = $(".answer-message");
 const questionLimit = questions.length;
-const questionsAskedContainer = $(
-  ".questions-asked-container"
-); // questions asked container (results screen)
+const questionsAskedContainer = $(".questions-asked-container"); // questions asked container (results screen)
 let yes;
 
 let questionCounter = 0;
@@ -49,12 +49,35 @@ let questionsAskedList = [];
 let yourAnswersList = [];
 
 // add the questions to the availQuestions array
-function setAvailableQuestions() {
-  let questionIndices = [...Array(questions.length).keys()];
-  questionIndices = questionIndices.sort((a, b) => 0.5 - Math.random());
+// function setAvailableQuestions() {
+//   let questionIndices = [...Array(questions.length).keys()];
+//   questionIndices = questionIndices.filter(
+//     (index) => questions[index].category === "maps"
+//   );
+//   questionIndices = questionIndices.sort((a, b) => 0.5 - Math.random());
+//   for (let item of questionIndices) {
+//     availableQuestions.push(questions[item]);
+//   }
+// }
 
-  for (let item of questionIndices) {
-    availableQuestions.push(questions[item]);
+function setAvailableQuestions() {
+  console.log("Original questions array:", questions);
+  availableQuestions = questions.filter((q) => q.category === "maps");
+  console.log("Filtered questions:", availableQuestions);
+
+  if (availableQuestions.length === 0) {
+    console.error("No questions found with the category 'maps'.");
+    alert("No questions available in the selected category.");
+    return;
+  }
+
+  // Shuffle the filtered questions
+  for (let i = availableQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [availableQuestions[i], availableQuestions[j]] = [
+      availableQuestions[j],
+      availableQuestions[i],
+    ];
   }
 }
 
@@ -65,6 +88,39 @@ function resetDefinitionButton() {
 let read;
 //set question number, question text and answer options - line 35 to 83
 function getNewQuestion() {
+  if (availableQuestions.length === 0) {
+    console.error("No available questions to display.");
+    alert("No more questions available.");
+    return;
+  }
+  currentQuestion = availableQuestions[questionCounter];
+  questionText.innerHTML = currentQuestion.q;
+
+  const questionIndex = availableQuestions[questionCounter];
+  if (!questionIndex) {
+    console.error(`Invalid question at index ${questionCounter}`);
+    return;
+  }
+
+  // currentQuestion = questionIndex;
+
+  // Ensure `currentQuestion` has the required properties
+  if (!currentQuestion.q || !Array.isArray(currentQuestion.options)) {
+    console.error("Question is missing required properties (q, options).");
+    return;
+  }
+
+  questionText.innerHTML = currentQuestion.q;
+
+  if (currentQuestion.hasOwnProperty("img")) {
+    const img = document.createElement("img");
+    img.src = currentQuestion.img;
+    questionText.appendChild(img);
+  }
+
+  definitionText.innerHTML =
+    currentQuestion.definition || "No definition provided.";
+
   didYouKnowContainer.classList.remove("keep-hidden");
   didYouKnowContainer.classList.add("hide");
   answerMessage.classList.add("hide");
@@ -83,22 +139,24 @@ function getNewQuestion() {
     utterThis.voice = englishMaleVoice;
     utterThis.pitch = 0.7;
     utterThis.volume = 0.9;
-    utterThis.rate = 0.9;  
-    
-    const reading = window.speechSynthesis.speak(utterThis);
-      };
+    utterThis.rate = 0.9;
 
-  const questionIndex = availableQuestions[questionCounter];
+    const reading = window.speechSynthesis.speak(utterThis);
+  };
+
+  // const questionIndex = availableQuestions[questionCounter];
   currentQuestion = questionIndex;
   //set question text
   questionText.innerHTML = currentQuestion.q;
   if (currentQuestion.hasOwnProperty("img")) {
     const img = document.createElement("img");
     img.src = currentQuestion.img;
-        questionText.appendChild(img);
+    questionText.appendChild(img);
   }
 
-  setTimeout(()=>{ read(currentQuestion.q)}, 400);
+  setTimeout(() => {
+    read(currentQuestion.q);
+  }, 400);
 
   definitionText.innerHTML = currentQuestion.definition;
   questionsAskedList.push(currentQuestion);
@@ -160,46 +218,49 @@ function getNewQuestion() {
 
 function toggleDefinitionButtonText() {
   showDefinitionButton.classList.toggle("active");
-  
+
   if (!showDefinitionButton.classList.contains("active")) {
-   
     showDefinitionButton.innerText = "Show definition";
     cancelSpeech();
   } else if (showDefinitionButton.classList.contains("active")) {
     showDefinitionButton.innerText = "Hide definition";
-    setTimeout(()=>{
-      const utterThis = new SpeechSynthesisUtterance(currentQuestion.definition);
+    setTimeout(() => {
+      const utterThis = new SpeechSynthesisUtterance(
+        currentQuestion.definition
+      );
       utterThis.voice = englishMaleVoice;
       utterThis.pitch = 0.7;
       utterThis.volume = 0.9;
       utterThis.rate = 0.9;
-           
+
       utterThis.addEventListener("end", (e) => {
-        console.log(`Utterance has finished being spoken after ${e.elapsedTime} seconds`);
-      }
-      
-    );
-    const words = currentQuestion.definition.length;
-        const timeToWait = words*50;
-        // console.log(`currentQuestion.definition.length is ${currentQuestion.definition.length}`);
-      
-        setTimeout(() => {if (!didYouKnowContainer.classList.contains("keep-hidden")){ 
+        console.log(
+          `Utterance has finished being spoken after ${e.elapsedTime} seconds`
+        );
+      });
+      const words = currentQuestion.definition.length;
+      const timeToWait = words * 50;
+      // console.log(`currentQuestion.definition.length is ${currentQuestion.definition.length}`);
+
+      setTimeout(() => {
+        if (!didYouKnowContainer.classList.contains("keep-hidden")) {
           didYouKnowContainer.classList.remove("hide");
           showDefinitionButton.classList.add("hide");
-          }}, timeToWait );
-        yes.focus();
-     const reading = window.speechSynthesis.speak(utterThis);
-  },200)
         }
+      }, timeToWait);
+      yes.focus();
+      const reading = window.speechSynthesis.speak(utterThis);
+    }, 200);
+  }
 }
 
 function showHideDefinition() {
   yes = $(".yes");
   const no = $(".no");
-    definitionText.classList.toggle("hide");
-    
+  definitionText.classList.toggle("hide");
+
   toggleDefinitionButtonText();
-  
+
   yes.addEventListener("keydown", (e) => {
     if (e.keyCode == "39") {
       no.focus();
@@ -225,11 +286,9 @@ function getResult(element) {
   didYouKnowContainer.classList.add("hide");
   didYouKnowContainer.classList.add("keep-hidden");
   const id = parseInt(element.id);
-  ;
-
   //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
-    yourAnswersList.push("yes")
+    yourAnswersList.push("yes");
     answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
     //     // add green colour if user selects correct option
     element.classList.add("correct");
@@ -268,7 +327,6 @@ function updateAnswerIndicator(markType) {
 }
 
 function next() {
-  
   cancelSpeech();
   if (questionCounter >= questionLimit) {
     quizOver();
@@ -320,11 +378,11 @@ function displayQuestions() {
     translationCell.innerHTML = questionsAskedList[i].definition;
     translationCell.setAttribute("data-cell", "Translation: ");
 
-      // Column 4 - create a table cell to show if the given answer was right or wrong
+    // Column 4 - create a table cell to show if the given answer was right or wrong
     const resultCell = document.createElement("td");
 
-    if (yourAnswersList[i] === "yes"){
-        resultCell.innerHTML =
+    if (yourAnswersList[i] === "yes") {
+      resultCell.innerHTML =
         "<img src='./images/correct.png' alt = 'correct' width='30'/>";
       resultCell.classList.add("correct");
     } else {
@@ -354,7 +412,6 @@ function resetQuiz() {
   questionsAskedList = [];
   yourAnswersList = [];
   removeQuestions();
-  
 }
 
 function tryAgainQuiz() {
@@ -390,6 +447,7 @@ function startQuiz() {
   answersIndicator();
 }
 
+console.log(questions);
 window.onload = function () {
   homeBox.querySelector(".total-questions").innerHTML = questionLimit;
 };

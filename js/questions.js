@@ -2,121 +2,144 @@ const questions = [
   {
     id: 1,
     q: "map",
-    definition: "A drawing of the whole of, or part of, an area, showing its features",
+    definition:
+      "A drawing of the whole of, or part of, an area, showing its features",
     options: ["yes", "no"],
-    a: 0,  
+    category: "maps",
+    a: 0,
   },
   {
     id: 2,
     q: "plan",
-    definition: "A drawing of what you would see looking down at somewhere from above",
+    definition:
+      "A drawing of what you would see looking down at somewhere from above",
     options: ["yes", "no"],
-    a: 0,  
+    category: "maps",
+    a: 0,
   },
   {
     id: 3,
     q: "scale",
-    definition: "The relationship between the size of things on a map and the size of them in the real world",
+    definition:
+      "The relationship between the size of things on a map and the size of them in the real world",
     options: ["yes", "no"],
-    a: 0,  
+    category: "frogs",
+    a: 0,
   },
-  {
-    id: 4,
-    q: "grid reference",
-    definition: "A numerical way of working out where a place is on a map",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 5,
-    q: "distance",
-    definition: "How far it is between two things",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 6,
-    q: "mental map",
-    definition: "A map that you make in your head",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 7,
-    q: "latitude",
-    definition: "(Imaginary) horizontal lines which wrap around the world, to show how far away from the equator somewhere is.",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 8,
-    q: "longitude",
-    definition: "(Imaginary) vertical lines which wrap over the world, to show how far away from the Prime Meridian somewhere is.",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 9,
-    q: "equator",
-    definition: "0 &deg; latitude",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 10,
-    q: "tropics",
-    definition: "The area of land between the Tropic of Cancer (in the Northern Hemisphere) and the Tropic of Capricorn (in the Southern Hemisphere)",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 11,
-    q: "physical map",
-    definition: "Shows physical features, e.g. rivers and relief",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 12,
-    q: "political map",
-    definition: "Shows how the land is divided into countries or regions",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 13,
-    q: "topographical map",
-    definition: "Shows the same as physical maps but with human features added",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 14,
-    q: "thematic map",
-    definition: "Shows information on a single topic e.g. hours of sunshine",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 15,
-    q: "Prime Meridian",
-    definition: "An imaginary vertical line that divides Earth into east and west, that passes through Greenwich, UK",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-  {
-    id: 16,
-    q: "relief",
-    definition: "height differences in a landscape",
-    options: ["yes", "no"],
-    a: 0,  
-  },
-]
+  // {
+  //   id: 4,
+  //   q: "grid reference",
+  //   definition: "A numerical way of working out where a place is on a map",
+  //   options: ["yes", "no"],
+  //   category: "maps",
+  //   a: 0,
+  // },
+  // {
+  //   id: 5,
+  //   q: "distance",
+  //   definition: "How far it is between two things",
+  //   options: ["yes", "no"],
+  //   category: "maps",
+  //   a: 0,
+  // },
+  // {
+  //   id: 6,
+  //   q: "mental map",
+  //   definition: "A map that you make in your head",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 7,
+  //   q: "latitude",
+  //   definition:
+  //     "(Imaginary) horizontal lines which wrap around the world, to show how far away from the equator somewhere is.",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 8,
+  //   q: "longitude",
+  //   definition:
+  //     "(Imaginary) vertical lines which wrap over the world, to show how far away from the Prime Meridian somewhere is.",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 9,
+  //   q: "equator",
+  //   definition: "0 &deg; latitude",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 10,
+  //   q: "tropics",
+  //   definition:
+  //     "The area of land between the Tropic of Cancer (in the Northern Hemisphere) and the Tropic of Capricorn (in the Southern Hemisphere)",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 11,
+  //   q: "physical map",
+  //   definition: "Shows physical features, e.g. rivers and relief",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 12,
+  //   q: "political map",
+  //   definition: "Shows how the land is divided into countries or regions",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 13,
+  //   q: "topographical map",
+  //   definition: "Shows the same as physical maps but with human features added",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 14,
+  //   q: "thematic map",
+  //   definition: "Shows information on a single topic e.g. hours of sunshine",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "maps",
+  // },
+  // {
+  //   id: 15,
+  //   q: "Prime Meridian",
+  //   definition:
+  //     "An imaginary vertical line that divides Earth into east and west, that passes through Greenwich, UK",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "frog",
+  // },
+  // {
+  //   id: 16,
+  //   q: "relief",
+  //   definition: "height differences in a landscape",
+  //   options: ["yes", "no"],
+  //   a: 0,
+  //   category: "frog",
+  // },
+];
 //   // {
 //   //   id: 17,
 //   //   q: "crust",
 //   //   definition: "The solid outer layer of the Earth",
-//   //   options: ["yes", "no"], 
+//   //   options: ["yes", "no"],
 //   //   a: 0,
 //   // },
 //   {
@@ -124,7 +147,7 @@ const questions = [
 //     q: "mineral",
 //     definition: "A solid, naturally occurring inorganic (non-living) substance",
 //     options: ["yes", "no"],
-//     a: 0,  
+//     a: 0,
 //   },
 //   {
 //     id: 19,
@@ -137,55 +160,55 @@ const questions = [
 //     q: "feldspar",
 //   definition: "A common type of mineral, usually pale or colourless",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 21,
 //     q: "quartz",
 //   definition: "A hard mineral occurring in colourless and transparent hexagonal crystals",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 22,
 //     q: "sedimentary rock",
 //   definition: "Rocks formed from sediments that have settled at the bottom of a lake, sea or ocean, and have been compressed over millions of years.",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 23,
 //     q: "magma",
 //   definition: "Molten rock underground (called lava on the surface of the Earth).",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 24,
 //     q: "igneous rock",
 //   definition: "Rocks formed when magma cools.",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 25,
 //     q: "extrusive rock",
 //   definition: "Igneous rock formed on the surface of the Earth by a volcano.",
 //     options: ["yes", "no"],
- 
+
 //   a: 0},
 //   {
 //     id: 26,
 //     q: "intrusive rock",
 //   definition: "Igneous rock formed within the Earth.",
 //     options: ["yes", "no"],
- 
+
 //   a: 0, },
 //   {
 //     id: 27,
 //     q: "metamorphic rock",
 //   definition: "Rocks that started out as some other type of rock, but have been changed due to heat and/or pressure.",
-  
+
 //     options: ["yes", "no"],
 //    a: 0},
 //   {
@@ -222,7 +245,7 @@ const questions = [
 //     id: 33,
 //     q: "compaction",
 //   definition: "When sediment is squashed because of the weight of the layers above.",
-  
+
 //     options: ["yes", "no"],
 //    a: 0},
 //   {
@@ -237,7 +260,7 @@ const questions = [
 //   definition: "A process where rock is broken down by the actions of things in its environment.",
 //     options: ["yes", "no"],
 //    a: 0},
-    
+
 //   {
 //     id: 36,
 //     q: "uplift",
@@ -270,62 +293,62 @@ const questions = [
 //    category: "drama",
 //   options: ["yes", "no"],
 //    a: 0},
-  //  const questions = [
+//  const questions = [
 
-  //   {
-  //   id: 41,
-  //   q: "Which musical note is this?",
-  //   img: "./images/crochet-1-beat.png",
-  // definition: "A crochet = 1 beat.",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 42,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/crochet-1-beat.png",
-  // definition: "A crochet = 1 beat.",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 43,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/2-quavers-0.5+0.5-beats.png",
-  // definition: "2 quavers = 0.5 + 0.5 beats",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 44,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/dotted-minim-3-beats.png",
-  // definition: "Dotted minim - 3 beats",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 45,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/minim-2-beats.png",
-  // definition: "Minim = 2 beats",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 46,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/quaver-0.5-beat.png",
-  // definition: "A quaver = 1/2 beat.",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
-  //  {
-  //   id: 47,
-  //   q: "Which musical note is this?",
-  //   img: "./images/music/semibreve-4-beats.png",
-  // definition: "A semibreve = 4 beats",
-  //  category: "music",
-  // options: ["yes", "no"],
-  //  a: 0},
+//   {
+//   id: 41,
+//   q: "Which musical note is this?",
+//   img: "./images/crochet-1-beat.png",
+// definition: "A crochet = 1 beat.",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 42,
+//   q: "Which musical note is this?",
+//   img: "./images/music/crochet-1-beat.png",
+// definition: "A crochet = 1 beat.",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 43,
+//   q: "Which musical note is this?",
+//   img: "./images/music/2-quavers-0.5+0.5-beats.png",
+// definition: "2 quavers = 0.5 + 0.5 beats",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 44,
+//   q: "Which musical note is this?",
+//   img: "./images/music/dotted-minim-3-beats.png",
+// definition: "Dotted minim - 3 beats",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 45,
+//   q: "Which musical note is this?",
+//   img: "./images/music/minim-2-beats.png",
+// definition: "Minim = 2 beats",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 46,
+//   q: "Which musical note is this?",
+//   img: "./images/music/quaver-0.5-beat.png",
+// definition: "A quaver = 1/2 beat.",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
+//  {
+//   id: 47,
+//   q: "Which musical note is this?",
+//   img: "./images/music/semibreve-4-beats.png",
+// definition: "A semibreve = 4 beats",
+//  category: "music",
+// options: ["yes", "no"],
+//  a: 0},
 // ];
