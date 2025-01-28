@@ -35,13 +35,13 @@ const showDefinitionButton = document.getElementById("show-definition"); // show
 // const questionLimit = 5;
 const didYouKnowContainer = $(".did-you-know-container");
 const answerMessage = $(".answer-message");
-const questionLimit = questions.length;
 const questionsAskedContainer = $(".questions-asked-container"); // questions asked container (results screen)
 let yes;
 
 let questionCounter = 0;
 let currentQuestion;
 let availableQuestions = [];
+const questionLimit = availableQuestions.length;
 let availableOptions = [];
 let correctAnswers = 0;
 let attempt = 0;
