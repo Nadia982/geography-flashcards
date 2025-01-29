@@ -1,4 +1,6 @@
 console.clear();
+
+let category = "maps";
 function $(type) {
   return document.querySelector(type);
 }
@@ -19,6 +21,7 @@ const cancelSpeech = () => {
 const englishMaleVoice = voices.find(
   (voice) => voice.name === "Google UK English Male"
 );
+
 const readBtn = $("#read-btn");
 const body = $("body");
 const questionNumber = $(".question-number"); //question number appears here
@@ -41,7 +44,7 @@ let yes;
 let questionCounter = 0;
 let currentQuestion;
 let availableQuestions = [];
-const questionLimit = availableQuestions.length;
+let questionLimit = availableQuestions.length;
 let availableOptions = [];
 let correctAnswers = 0;
 let attempt = 0;
@@ -62,7 +65,7 @@ let yourAnswersList = [];
 
 function setAvailableQuestions() {
   console.log("Original questions array:", questions);
-  availableQuestions = questions.filter((q) => q.category === "maps");
+  availableQuestions = questions.filter((q) => q.category === category);
   console.log("Filtered questions:", availableQuestions);
 
   if (availableQuestions.length === 0) {
@@ -79,6 +82,7 @@ function setAvailableQuestions() {
       availableQuestions[i],
     ];
   }
+  questionLimit = availableQuestions.length;
 }
 
 function resetDefinitionButton() {
@@ -449,5 +453,7 @@ function startQuiz() {
 
 console.log(questions);
 window.onload = function () {
-  homeBox.querySelector(".total-questions").innerHTML = questionLimit;
+  availableQuestions = questions.filter((q) => q.category === category);
+  homeBox.querySelector(".total-questions").innerHTML =
+    availableQuestions.length;
 };
