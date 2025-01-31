@@ -1,6 +1,6 @@
 console.clear();
 
-let category = "maps";
+let category = "rain";
 function $(type) {
   return document.querySelector(type);
 }
