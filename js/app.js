@@ -285,36 +285,34 @@ function showHideDefinition() {
     }
   });
 }
-
+function next() {
+  cancelSpeech();
+  if (questionCounter >= questionLimit) {
+    quizOver();
+  } else {
+    getNewQuestion();
+    resetDefinitionButton();
+  }
+}
 function getResult(element) {
   didYouKnowContainer.classList.add("hide");
   didYouKnowContainer.classList.add("keep-hidden");
   const id = parseInt(element.id);
-  //get the answer by comparing the id of the clicked option
   if (id === currentQuestion.a) {
     yourAnswersList.push("yes");
-    answerMessage.innerHTML = `<p>You selected that you <em>know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
-    //     // add green colour if user selects correct option
     element.classList.add("correct");
-    //     //add a tick mark to the answer indicator
     updateAnswerIndicator("correct");
     correctAnswers++;
   } else {
     yourAnswersList.push("no");
-    answerMessage.innerHTML = `<p>You selected that you <em>do not know</em> the definition for ${currentQuestion.q}. Click the "Next" button below to go to the next question.</p>`;
-    // add red colour if user selects incorrect option
     element.classList.add("incorrect");
-    //add a cross mark to the answer indicator
     updateAnswerIndicator("incorrect");
   }
   answerMessage.classList.remove("hide");
   attempt++;
-  nextButton.classList.remove("hide");
-  // definitionText.classList.remove("hide");
-  nextButton.focus();
+  setTimeout(next, 100);
 }
 
-//creating answersIndicator box, and answer indicator circles for each question
 function answersIndicator() {
   answersIndicatorContainer.innerHTML = "";
   const totalQuestion = questionLimit;
@@ -330,25 +328,12 @@ function updateAnswerIndicator(markType) {
   );
 }
 
-function next() {
-  cancelSpeech();
-  if (questionCounter >= questionLimit) {
-    quizOver();
-  } else {
-    getNewQuestion();
-    resetDefinitionButton();
-  }
-}
-
 function quizOver() {
-  //hide quizBox
   quizBox.classList.add("hide");
-  //show resultBox
   resultBox.classList.remove("hide");
   quizResult();
 }
 
-//get the quiz result
 function quizResult() {
   resultBox.querySelector(".total-score").innerHTML =
     correctAnswers + "/" + questionLimit;
